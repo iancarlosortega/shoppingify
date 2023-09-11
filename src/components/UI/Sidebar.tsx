@@ -75,53 +75,53 @@ export const Sidebar = () => {
 						'[&>li>a]:py-4 [&>li]:w-full [&>li>a]:w-full [&>li>a:hover]:bg-gray-100',
 						'[&>li>a]:flex [&>li>a]:justify-center [&>li>a]:items-center'
 					)}>
-					<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-						<Tooltip
-							showArrow
-							content='items'
-							placement='right'
-							closeDelay={300}
-							classNames={{
-								base: 'shadow-xl text-white bg-dark',
-								arrow: 'bg-dark',
-							}}>
+					<Tooltip
+						showArrow
+						content='items'
+						placement='right'
+						closeDelay={300}
+						classNames={{
+							base: 'shadow-xl text-white bg-dark',
+							arrow: 'bg-dark',
+						}}>
+						<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<Link href='/' className='outline-none'>
 								<AiOutlineUnorderedList className='w-6 h-6 text-dark' />
 							</Link>
-						</Tooltip>
-					</li>
+						</li>
+					</Tooltip>
 
-					<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-						<Tooltip
-							showArrow
-							content='history'
-							placement='right'
-							closeDelay={300}
-							classNames={{
-								base: 'shadow-xl text-white bg-dark',
-								arrow: 'bg-dark',
-							}}>
+					<Tooltip
+						showArrow
+						content='history'
+						placement='right'
+						closeDelay={300}
+						classNames={{
+							base: 'shadow-xl text-white bg-dark',
+							arrow: 'bg-dark',
+						}}>
+						<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<Link href='/history' className='outline-none'>
 								<MdReplay className='w-6 h-6 text-dark' />
 							</Link>
-						</Tooltip>
-					</li>
+						</li>
+					</Tooltip>
 
-					<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-						<Tooltip
-							showArrow
-							content='statistics'
-							placement='right'
-							closeDelay={300}
-							classNames={{
-								base: 'shadow-xl text-white bg-dark',
-								arrow: 'bg-dark',
-							}}>
+					<Tooltip
+						showArrow
+						content='statistics'
+						placement='right'
+						closeDelay={300}
+						classNames={{
+							base: 'shadow-xl text-white bg-dark',
+							arrow: 'bg-dark',
+						}}>
+						<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<Link href='/statistics' className='outline-none'>
 								<BiBarChartSquare className='w-6 h-6 text-dark' />
 							</Link>
-						</Tooltip>
-					</li>
+						</li>
+					</Tooltip>
 
 					{/* Active Border */}
 					<div
