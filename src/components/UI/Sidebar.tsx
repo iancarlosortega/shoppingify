@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Logo } from '..';
 import { AiOutlineShoppingCart, AiOutlineUnorderedList } from 'react-icons/ai';
 import { MdReplay } from 'react-icons/md';
 import { BiBarChartSquare } from 'react-icons/bi';
 import { Button } from '@nextui-org/button';
 import { Tooltip } from '@nextui-org/tooltip';
+import { Logo } from '../icons/Logo';
 import { classNames } from '@/utils';
 
 interface ActiveBorder {
@@ -62,7 +62,7 @@ export const Sidebar = () => {
 	}, [pathname]);
 
 	return (
-		<aside className='h-full flex flex-col justify-between'>
+		<aside className='w-[80px] h-full flex flex-col justify-between fixed'>
 			<Link href='/' className='p-4'>
 				<Logo />
 			</Link>

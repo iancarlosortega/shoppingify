@@ -15,8 +15,12 @@ const config: Config = {
 				'primary-lt': '#FFF0DE',
 				secondary: '#56CCF2',
 				tertiary: '#EB5757',
+				'tertiary-dk': '#80485B',
 				background: '#FAFAFE',
 				dark: '#454545',
+			},
+			boxShadow: {
+				light: '0px 2px 12px 0px rgba(0, 0, 0, 0.05)',
 			},
 		},
 	},

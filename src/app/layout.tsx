@@ -3,10 +3,10 @@ import type { Metadata } from 'next';
 import { Quicksand } from 'next/font/google';
 import { Providers } from '@/providers';
 import { Sidebar } from '@/components/UI/Sidebar';
-import { ShoppingList } from '@/components/UI/ShoppingList';
+import { ShoppingList } from '@/components/cart/ShoppingList';
 
 const quicksand = Quicksand({
-	weight: ['500', '700'],
+	weight: ['500', '600', '700'],
 	subsets: ['latin'],
 });
 
@@ -24,9 +24,11 @@ export default function RootLayout({
 		<html lang='es'>
 			<body className={quicksand.className}>
 				<Providers>
-					<div className='flex h-screen w-full'>
+					<div className='flex min-h-screen h-full w-full'>
 						<Sidebar />
-						<main className='flex-1 bg-background'>{children}</main>
+						<main className='flex-1 bg-background ml-[80px] mr-[400px] px-24 py-12'>
+							{children}
+						</main>
 						<ShoppingList />
 					</div>
 				</Providers>
