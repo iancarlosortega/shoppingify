@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
 	return (
-		<div className='bg-white p-6 shadow-lg rounded-md'>
+		<div className='bg-white p-6 shadow-lg rounded-md w-[400px] max-w-[90%]'>
 			<h1 className='text-center text-2xl font-bold text-primary'>
 				Login your account
 			</h1>
@@ -24,7 +24,7 @@ export default function LoginPage() {
 			<form>
 				<Input
 					classNames={{
-						inputWrapper: 'mt-4',
+						inputWrapper: 'mt-8',
 					}}
 					placeholder='example@test.com'
 					type='email'
@@ -114,7 +114,7 @@ export default function LoginPage() {
 				<footer>
 					<p className='mt-2 text-center text-sm text-gray-500'>
 						Don&apos;t have an account?{' '}
-						<Link href='/auth/register' className='text-secondary underline'>
+						<Link href='/register' className='text-secondary underline'>
 							Sign up
 						</Link>
 					</p>
