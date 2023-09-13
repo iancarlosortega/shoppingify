@@ -1,10 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Button } from '@nextui-org/button';
-import { Input } from '@nextui-org/input';
-import { MdEmail } from 'react-icons/md';
-import { AiTwotoneLock } from 'react-icons/ai';
-import { BsFillPersonFill } from 'react-icons/bs';
+import { RegisterForm } from './RegisterForm';
 
 export const metadata: Metadata = {
 	title: 'Register | Shoppingify',
@@ -21,52 +17,16 @@ export default function RegisterPage() {
 				Setup a new account in a minute.
 			</p>
 
-			<form>
-				<Input
-					classNames={{
-						inputWrapper: 'mt-8',
-					}}
-					placeholder='Full name'
-					type='text'
-					label='Name'
-					startContent={<BsFillPersonFill />}
-				/>
+			<RegisterForm />
 
-				<Input
-					classNames={{
-						inputWrapper: 'mt-4',
-					}}
-					placeholder='example@test.com'
-					type='email'
-					label='Email'
-					startContent={<MdEmail />}
-				/>
-
-				<Input
-					classNames={{
-						inputWrapper: 'mt-4',
-					}}
-					placeholder='Password'
-					type='Password'
-					label='Password'
-					startContent={<AiTwotoneLock />}
-				/>
-
-				<Button
-					fullWidth
-					className='bg-secondary text-white font-bold mt-6 mb-4'>
-					Login
-				</Button>
-
-				<footer>
-					<p className='mt-4 text-center text-sm text-gray-500'>
-						Already have an account?{' '}
-						<Link href='/login' className='text-secondary underline'>
-							Sign in
-						</Link>
-					</p>
-				</footer>
-			</form>
+			<footer>
+				<p className='mt-4 text-center text-sm text-gray-500'>
+					Already have an account?{' '}
+					<Link href='/login' className='text-secondary underline'>
+						Sign in
+					</Link>
+				</p>
+			</footer>
 		</div>
 	);
 }
