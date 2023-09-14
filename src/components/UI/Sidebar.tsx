@@ -3,12 +3,20 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import {
+	Badge,
+	Button,
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
+	Tooltip,
+} from '@nextui-org/react';
 import { AiOutlineShoppingCart, AiOutlineUnorderedList } from 'react-icons/ai';
-import { MdReplay } from 'react-icons/md';
+import { BsFillPersonFill } from 'react-icons/bs';
+import { MdOutlineLogout, MdReplay } from 'react-icons/md';
 import { BiBarChartSquare } from 'react-icons/bi';
-import { Button } from '@nextui-org/button';
-import { Tooltip } from '@nextui-org/tooltip';
-import { Logo } from '../icons/Logo';
+import { Logo } from '@/components/icons';
 import { classNames } from '@/utils';
 
 interface ActiveBorder {
@@ -60,6 +68,10 @@ export const Sidebar = () => {
 			top,
 		});
 	}, [pathname]);
+
+	const handleToggleShoppingList = () => {
+		console.log('toggle shopping list');
+	};
 
 	return (
 		<aside className='w-[80px] h-full flex flex-col justify-between fixed'>
@@ -133,14 +145,52 @@ export const Sidebar = () => {
 				</ul>
 			</nav>
 
-			<Button
-				isIconOnly
-				radius='full'
-				size='lg'
-				className='bg-primary m-4'
-				aria-label='Toggle shopping list'>
-				<AiOutlineShoppingCart className='text-white h-6 w-6' />
-			</Button>
+			<footer className='flex flex-col items-center gap-2'>
+				<Badge content='99+' disableOutline color='danger'>
+					<Button
+						onClick={handleToggleShoppingList}
+						isIconOnly
+						radius='full'
+						size='lg'
+						className='bg-primary'
+						aria-label='Toggle shopping list'>
+						<AiOutlineShoppingCart className='text-white h-6 w-6' />
+					</Button>
+				</Badge>
+
+				<Dropdown
+					placement='right-end'
+					backdrop='blur'
+					showArrow
+					classNames={{
+						base: 'py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black',
+						arrow: 'bg-default-200',
+					}}>
+					<DropdownTrigger>
+						<Button
+							isIconOnly
+							variant='shadow'
+							radius='full'
+							size='lg'
+							className='bg-tertiary mx-4 my-2 shadow-lg'
+							aria-label='Toggle shopping list'>
+							<BsFillPersonFill className='text-white h-6 w-6' />
+						</Button>
+					</DropdownTrigger>
+					<DropdownMenu aria-label='Profile Actions' variant='flat'>
+						<DropdownItem key='profile' className='h-14 gap-2'>
+							<p className='font-semibold'>Signed in as</p>
+							<p className='font-semibold'>zoey@example.com</p>
+						</DropdownItem>
+						<DropdownItem
+							key='logout'
+							color='danger'
+							startContent={<MdOutlineLogout />}>
+							Log Out
+						</DropdownItem>
+					</DropdownMenu>
+				</Dropdown>
+			</footer>
 		</aside>
 	);
 };
