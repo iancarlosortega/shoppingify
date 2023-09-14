@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
@@ -17,6 +20,8 @@ interface IFormValues {
 
 export const RegisterForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
+	const router = useRouter();
+	const supabase = createClientComponentClient();
 
 	const {
 		register,
@@ -26,7 +31,23 @@ export const RegisterForm = () => {
 	} = useForm<IFormValues>();
 
 	const onSubmit = async (formValues: IFormValues) => {
-		console.log(formValues);
+		const { error } = await supabase.auth.signUp({
+			email: formValues.email,
+			password: formValues.password,
+			options: {
+				emailRedirectTo: `${location.origin}/auth/callback`,
+				data: {
+					full_name: formValues.fullName,
+				},
+			},
+		});
+
+		if (error) {
+			toast.error(error.message);
+			return;
+		}
+
+		router.push('/');
 	};
 
 	return (
