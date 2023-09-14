@@ -1,13 +1,20 @@
-import { Button } from '@nextui-org/button';
-import { Input } from '@nextui-org/input';
+'use client';
+
+import { Button, Input } from '@nextui-org/react';
+import useUIStore from '@/store/uiStore';
 import { BottleIcon } from '../icons/BottleIcon';
 
 export const ShoppingList = () => {
+	const { isShoppingListOpen } = useUIStore();
+
 	return (
-		<aside className='w-[400px] flex flex-col fixed right-0 min-h-screen'>
+		<aside
+			className={` ${
+				isShoppingListOpen ? 'translate-x-0' : 'translate-x-[400px]'
+			} w-[400px] max-w-[80%] flex flex-col fixed top-0 right-0 h-full transition-transform duration-300 ease-in`}>
 			<main className='p-8 flex-1 bg-primary-lt'>
 				<header className='h-[135px] flex gap-4 bg-tertiary-dk rounded-3xl py-4 px-6 relative'>
-					<div className='absolute top-[-15px]'>
+					<div className='absolute left-0 md:left-auto top-[-15px]'>
 						<BottleIcon />
 					</div>
 					<div className='w-[95px]'></div>
@@ -21,7 +28,7 @@ export const ShoppingList = () => {
 					</div>
 				</header>
 			</main>
-			<footer className='p-8'>
+			<footer className='p-8 bg-white'>
 				<div className='flex relative'>
 					<Input
 						size='lg'

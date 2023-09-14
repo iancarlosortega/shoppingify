@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { MainContent } from '@/components/MainContent';
 import { Sidebar } from '@/components/UI/Sidebar';
 import { ShoppingList } from '@/components/cart/ShoppingList';
 
@@ -13,11 +14,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className='flex min-h-screen h-full w-full'>
+		<div className='min-h-screen h-full w-full'>
 			<Sidebar />
-			<main className='flex-1 bg-background ml-[80px] mr-[400px] px-24 py-12'>
-				{children}
-			</main>
+			<MainContent>{children}</MainContent>
 			<ShoppingList />
 		</div>
 	);

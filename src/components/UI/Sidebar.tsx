@@ -16,6 +16,7 @@ import { AiOutlineShoppingCart, AiOutlineUnorderedList } from 'react-icons/ai';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { MdOutlineLogout, MdReplay } from 'react-icons/md';
 import { BiBarChartSquare } from 'react-icons/bi';
+import useUIStore from '@/store/uiStore';
 import { Logo } from '@/components/icons';
 import { classNames } from '@/utils';
 
@@ -25,6 +26,7 @@ interface ActiveBorder {
 }
 
 export const Sidebar = () => {
+	const { toggleShoppingList } = useUIStore();
 	const [activeBorder, setActiveBorder] = useState<ActiveBorder>({});
 	const [defaultBorder, setDefaultBorder] = useState<ActiveBorder>({});
 	const navElement = useRef<HTMLUListElement>(null);
@@ -69,12 +71,8 @@ export const Sidebar = () => {
 		});
 	}, [pathname]);
 
-	const handleToggleShoppingList = () => {
-		console.log('toggle shopping list');
-	};
-
 	return (
-		<aside className='w-[80px] h-full flex flex-col justify-between fixed'>
+		<aside className='w-[80px] min-h-screen flex flex-col justify-between fixed'>
 			<Link href='/' className='p-4'>
 				<Logo />
 			</Link>
@@ -146,9 +144,9 @@ export const Sidebar = () => {
 			</nav>
 
 			<footer className='flex flex-col items-center gap-2'>
-				<Badge content='99+' disableOutline color='danger'>
+				<Badge content='9+' disableOutline color='danger'>
 					<Button
-						onClick={handleToggleShoppingList}
+						onClick={toggleShoppingList}
 						isIconOnly
 						radius='full'
 						size='lg'

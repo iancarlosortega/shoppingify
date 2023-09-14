@@ -3,113 +3,12 @@ import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
 import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
 
-const ITEMS_MOCKUP: Category[] = [
-	{
-		id: '1',
-		name: 'Fruits and Vegetables',
-		items: [
-			{
-				id: '1',
-				name: 'Banana',
-			},
-			{
-				id: '2',
-				name: 'Manzano',
-			},
-			{
-				id: '3',
-				name: 'Pineapple',
-			},
-			{
-				id: '4',
-				name: 'Watermelon',
-			},
-			{
-				id: '5',
-				name: 'Pre-cooked corn 450g',
-			},
-			{
-				id: '6',
-				name: 'Avocado',
-			},
-		],
-	},
-	{
-		id: '2',
-		name: 'Meat and Fish',
-		items: [
-			{
-				id: '1',
-				name: 'Chicken Leg Box',
-			},
-			{
-				id: '2',
-				name: 'Chicken 1kg',
-			},
-			{
-				id: '3',
-				name: 'Pork fillets 450g',
-			},
-			{
-				id: '4',
-				name: 'Salmon 1kg',
-			},
-		],
-	},
-	{
-		id: '3',
-		name: 'Fruits and Vegetables',
-		items: [
-			{
-				id: '1',
-				name: 'Banana',
-			},
-			{
-				id: '2',
-				name: 'Manzano',
-			},
-			{
-				id: '3',
-				name: 'Pineapple',
-			},
-			{
-				id: '4',
-				name: 'Watermelon',
-			},
-			{
-				id: '5',
-				name: 'Pre-cooked corn 450g',
-			},
-			{
-				id: '6',
-				name: 'Avocado',
-			},
-		],
-	},
-	{
-		id: '4',
-		name: 'Fruits and Vegetables',
-		items: [
-			{
-				id: '1',
-				name: 'Banana',
-			},
-			{
-				id: '2',
-				name: 'Manzano',
-			},
-			{
-				id: '3',
-				name: 'Pineapple',
-			},
-		],
-	},
-];
+const ITEMS_MOCKUP: Category[] = [];
 
 export default function Home() {
 	return (
 		<>
-			<header className='flex justify-between gap-12'>
+			<header className='flex flex-col md:flex-row justify-between gap-6 md:gap-12'>
 				<h2 className='text-primary text-2xl font-bold'>
 					Shoppingify{' '}
 					<span className='text-black font-medium'>
