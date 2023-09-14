@@ -22,7 +22,7 @@ export default function RegisterPage() {
 			<footer>
 				<p className='mt-4 text-center text-sm text-gray-500'>
 					Already have an account?{' '}
-					<Link href='/login' className='text-secondary underline'>
+					<Link href='/auth/login' className='text-secondary underline'>
 						Sign in
 					</Link>
 				</p>

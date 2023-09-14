@@ -22,7 +22,7 @@ export default function LoginPage() {
 			<footer>
 				<p className='mt-2 text-center text-sm text-gray-500'>
 					Don&apos;t have an account?{' '}
-					<Link href='/register' className='text-secondary underline'>
+					<Link href='/auth/register' className='text-secondary underline'>
 						Sign up
 					</Link>
 				</p>
