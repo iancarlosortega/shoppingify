@@ -2,11 +2,13 @@ import { create } from 'zustand';
 
 type State = {
 	isShoppingListOpen: boolean;
+	isAddItemFormOpen: boolean;
 	theme: string;
 };
 
 type Actions = {
 	toggleShoppingList: () => void;
+	toggleAddItemForm: () => void;
 	setTheme: (theme: string) => void;
 };
 
@@ -22,9 +24,12 @@ const getInitialTheme = (): string => {
 
 const useUIStore = create<State & Actions>()(set => ({
 	isShoppingListOpen: false,
+	isAddItemFormOpen: true, //TODO: change to false
 	theme: getInitialTheme(),
 	toggleShoppingList: () =>
 		set(state => ({ isShoppingListOpen: !state.isShoppingListOpen })),
+	toggleAddItemForm: () =>
+		set(state => ({ isAddItemFormOpen: !state.isAddItemFormOpen })),
 	setTheme: theme => set({ theme }),
 }));
 

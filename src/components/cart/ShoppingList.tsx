@@ -5,7 +5,7 @@ import useUIStore from '@/store/uiStore';
 import { BottleIcon } from '../icons/BottleIcon';
 
 export const ShoppingList = () => {
-	const { isShoppingListOpen } = useUIStore();
+	const { isShoppingListOpen, toggleAddItemForm } = useUIStore();
 
 	return (
 		<aside
@@ -22,7 +22,9 @@ export const ShoppingList = () => {
 						<p className='text-white font-bold'>
 							Didn&apos;t find what you need?
 						</p>
-						<Button className='bg-white text-black font-bold inline'>
+						<Button
+							onClick={toggleAddItemForm}
+							className='bg-white text-black font-bold inline'>
 							Add Item
 						</Button>
 					</div>

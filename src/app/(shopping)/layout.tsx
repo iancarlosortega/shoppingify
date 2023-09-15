@@ -4,6 +4,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { MainContent } from '@/components/MainContent';
 import { Sidebar } from '@/components/UI/Sidebar';
 import { ShoppingList } from '@/components/cart/ShoppingList';
+import { AddItemForm } from '@/components/products/AddItemForm';
 
 export const metadata: Metadata = {
 	title: 'Home | Shoppingify',
@@ -22,11 +23,14 @@ export default async function RootLayout({
 		data: { session },
 	} = await supabase.auth.getSession();
 
+	const { data: categories } = await supabase.from('categories').select();
+
 	return (
 		<div className='min-h-screen h-full w-full'>
 			<Sidebar />
 			<MainContent session={session}>{children}</MainContent>
 			<ShoppingList />
+			<AddItemForm categories={categories} />
 		</div>
 	);
 }
