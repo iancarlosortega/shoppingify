@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
 	Badge,
 	Button,
@@ -16,6 +17,7 @@ import { AiOutlineShoppingCart, AiOutlineUnorderedList } from 'react-icons/ai';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { MdOutlineLogout, MdReplay } from 'react-icons/md';
 import { BiBarChartSquare } from 'react-icons/bi';
+import useAuthStore from '@/store/authStore';
 import useUIStore from '@/store/uiStore';
 import { Logo } from '@/components/icons';
 import { classNames } from '@/utils';
@@ -26,11 +28,17 @@ interface ActiveBorder {
 }
 
 export const Sidebar = () => {
-	const { toggleShoppingList } = useUIStore();
+	const [size, setSize] = useState([0, 0]);
 	const [activeBorder, setActiveBorder] = useState<ActiveBorder>({});
 	const [defaultBorder, setDefaultBorder] = useState<ActiveBorder>({});
 	const navElement = useRef<HTMLUListElement>(null);
+
 	const pathname = usePathname();
+	const router = useRouter();
+	const supabase = createClientComponentClient();
+
+	const { toggleShoppingList } = useUIStore();
+	const { user } = useAuthStore();
 
 	const handleMouseEnter = (e: any) => {
 		const { height, top } = e.target.getBoundingClientRect()!;
@@ -48,6 +56,20 @@ export const Sidebar = () => {
 			top: defaultBorder.top,
 		});
 	};
+
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+		router.refresh();
+	};
+
+	useLayoutEffect(() => {
+		function updateSize() {
+			setSize([window.innerWidth, window.innerHeight]);
+		}
+		window.addEventListener('resize', updateSize);
+		updateSize();
+		return () => window.removeEventListener('resize', updateSize);
+	}, []);
 
 	useEffect(() => {
 		let currentNode = navElement.current?.children[0];
@@ -158,7 +180,7 @@ export const Sidebar = () => {
 
 				<Dropdown
 					placement='right-end'
-					backdrop='blur'
+					backdrop={size[0] > 992 ? 'blur' : undefined}
 					showArrow
 					classNames={{
 						base: 'py-1 px-1 border border-default-200 bg-gradient-to-br from-white to-default-200 dark:from-default-50 dark:to-black',
@@ -178,9 +200,10 @@ export const Sidebar = () => {
 					<DropdownMenu aria-label='Profile Actions' variant='flat'>
 						<DropdownItem key='profile' className='h-14 gap-2'>
 							<p className='font-semibold'>Signed in as</p>
-							<p className='font-semibold'>zoey@example.com</p>
+							<p className='font-semibold'>{user?.email}</p>
 						</DropdownItem>
 						<DropdownItem
+							onClick={handleSignOut}
 							key='logout'
 							color='danger'
 							startContent={<MdOutlineLogout />}>

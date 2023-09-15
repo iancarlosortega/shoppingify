@@ -11,7 +11,7 @@ export const ShoppingList = () => {
 		<aside
 			className={` ${
 				isShoppingListOpen ? 'translate-x-0' : 'translate-x-[400px]'
-			} w-[400px] max-w-[80%] flex flex-col fixed top-0 right-0 h-full transition-transform duration-300 ease-in`}>
+			} w-[400px] max-w-[80%] lg:translate-x-0 flex flex-col fixed top-0 right-0 h-full transition-transform duration-300 ease-in`}>
 			<main className='p-8 flex-1 bg-primary-lt'>
 				<header className='h-[135px] flex gap-4 bg-tertiary-dk rounded-3xl py-4 px-6 relative'>
 					<div className='absolute left-0 md:left-auto top-[-15px]'>
