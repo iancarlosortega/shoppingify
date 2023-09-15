@@ -21,6 +21,7 @@ import useAuthStore from '@/store/authStore';
 import useUIStore from '@/store/uiStore';
 import { Logo } from '@/components/icons';
 import { classNames } from '@/utils';
+import { ThemeToggle } from './ThemeToggle';
 
 interface ActiveBorder {
 	height?: number;
@@ -94,7 +95,7 @@ export const Sidebar = () => {
 	}, [pathname]);
 
 	return (
-		<aside className='w-[80px] min-h-screen flex flex-col justify-between fixed'>
+		<aside className='w-[80px] min-h-screen flex flex-col justify-between fixed dark:bg-neutral-900'>
 			<Link href='/' className='p-4'>
 				<Logo />
 			</Link>
@@ -105,7 +106,8 @@ export const Sidebar = () => {
 					className={classNames(
 						'flex flex-col gap-12 items-center',
 						'[&>li>a]:py-4 [&>li]:w-full [&>li>a]:w-full [&>li>a:hover]:bg-gray-100',
-						'[&>li>a]:flex [&>li>a]:justify-center [&>li>a]:items-center'
+						'[&>li>a]:flex [&>li>a]:justify-center [&>li>a]:items-center',
+						'dark:[&>li>a:hover]:bg-neutral-950'
 					)}>
 					<Tooltip
 						showArrow
@@ -118,7 +120,7 @@ export const Sidebar = () => {
 						}}>
 						<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<Link href='/' className='outline-none'>
-								<AiOutlineUnorderedList className='w-6 h-6 text-dark' />
+								<AiOutlineUnorderedList className='w-6 h-6 text-dark dark:text-light-gray' />
 							</Link>
 						</li>
 					</Tooltip>
@@ -134,7 +136,7 @@ export const Sidebar = () => {
 						}}>
 						<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<Link href='/history' className='outline-none'>
-								<MdReplay className='w-6 h-6 text-dark' />
+								<MdReplay className='w-6 h-6 text-dark dark:text-light-gray' />
 							</Link>
 						</li>
 					</Tooltip>
@@ -150,7 +152,7 @@ export const Sidebar = () => {
 						}}>
 						<li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
 							<Link href='/statistics' className='outline-none'>
-								<BiBarChartSquare className='w-6 h-6 text-dark' />
+								<BiBarChartSquare className='w-6 h-6 text-dark dark:text-light-gray' />
 							</Link>
 						</li>
 					</Tooltip>
@@ -201,6 +203,9 @@ export const Sidebar = () => {
 						<DropdownItem key='profile' className='h-14 gap-2'>
 							<p className='font-semibold'>Signed in as</p>
 							<p className='font-semibold'>{user?.email}</p>
+						</DropdownItem>
+						<DropdownItem isReadOnly key='toggle-theme'>
+							<ThemeToggle />
 						</DropdownItem>
 						<DropdownItem
 							onClick={handleSignOut}

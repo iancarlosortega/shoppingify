@@ -16,7 +16,7 @@ const config: Config = {
 				secondary: '#56CCF2',
 				tertiary: '#EB5757',
 				'tertiary-dk': '#80485B',
-				background: '#FAFAFE',
+				'light-gray': '#FAFAFE',
 				dark: '#454545',
 			},
 			boxShadow: {

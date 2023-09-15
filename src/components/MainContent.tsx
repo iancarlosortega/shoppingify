@@ -23,7 +23,7 @@ export const MainContent: React.FC<Props> = ({ session, children }) => {
 	}, [session, updateLoginUser]);
 
 	return (
-		<main className='min-h-screen h-full bg-background ml-[80px] lg:mr-[400px] p-6 md:p-12 lg:px-24 transition-all duration-300 ease-in'>
+		<main className='min-h-screen h-full bg-light-gray dark:bg-zinc-900 ml-[80px] lg:mr-[400px] p-6 md:p-12 lg:px-24 transition-all duration-300 ease-in'>
 			{children}
 		</main>
 	);

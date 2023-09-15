@@ -9,18 +9,18 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
 	return (
-		<div className='bg-white p-6 shadow-lg rounded-md w-[400px] max-w-[90%]'>
+		<div className='bg-white dark:bg-neutral-900 p-6 shadow-lg rounded-md w-[400px] max-w-[90%]'>
 			<h1 className='text-center text-2xl font-bold text-primary'>
 				Create an account
 			</h1>
-			<p className='text-center text-sm text-gray-500'>
+			<p className='text-center text-sm text-gray-500 dark:text-gray-300'>
 				Setup a new account in a minute.
 			</p>
 
 			<RegisterForm />
 
 			<footer>
-				<p className='mt-4 text-center text-sm text-gray-500'>
+				<p className='mt-4 text-center text-sm text-gray-500 dark:text-gray-300'>
 					Already have an account?{' '}
 					<Link href='/auth/login' className='text-secondary underline'>
 						Sign in

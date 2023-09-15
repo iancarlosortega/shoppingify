@@ -11,13 +11,13 @@ export default function Home() {
 			<header className='flex flex-col md:flex-row justify-between gap-6 md:gap-12'>
 				<h2 className='text-primary text-2xl font-bold'>
 					Shoppingify{' '}
-					<span className='text-black font-medium'>
+					<span className='text-black dark:text-white font-medium'>
 						allows you to take your shopping list wherever you go
 					</span>
 				</h2>
 
 				<Input
-					className='max-w-[400px]'
+					className='w-full lg:max-w-[400px]'
 					type='text'
 					placeholder='search item'
 					startContent={<AiOutlineSearch />}

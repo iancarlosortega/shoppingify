@@ -154,7 +154,9 @@ export const LoginForm = () => {
 			{/* Divider */}
 			<div className='flex items-center gap-2 my-4'>
 				<hr className='my-4 w-full' />
-				<p className='flex-1 text-center text-sm text-gray-500'>or</p>
+				<p className='flex-1 text-center text-sm text-gray-500 dark:text-gray-300'>
+					or
+				</p>
 				<hr className='my-4 w-full' />
 			</div>
 
