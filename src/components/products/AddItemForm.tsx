@@ -14,9 +14,11 @@ import {
 } from '@nextui-org/react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import useUIStore from '@/store/uiStore';
-import { classNames } from '@/utils';
-import { AddNewCategory } from '../modals/AddNewCategory';
 import useAuthStore from '@/store/authStore';
+import { AddNewCategory } from '@/components/modals/AddNewCategory';
+import { classNames } from '@/utils';
+import { Category } from '@/types/categories';
+import { Database } from '@/types/database';
 
 interface IFormValues {
 	name: string;
@@ -26,7 +28,7 @@ interface IFormValues {
 }
 
 interface Props {
-	categories: any;
+	categories: Category[];
 }
 
 export const AddItemForm: React.FC<Props> = ({ categories }) => {
@@ -34,16 +36,16 @@ export const AddItemForm: React.FC<Props> = ({ categories }) => {
 	const { isAddItemFormOpen, toggleAddItemForm } = useUIStore();
 	const { user } = useAuthStore();
 	const router = useRouter();
-	const supabase = createClientComponentClient();
+	const supabase = createClientComponentClient<Database>();
 
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm<IFormValues>();
 
 	const onSubmit = async (formValues: IFormValues) => {
-		console.log(formValues);
 		const { error } = await supabase.from('products').insert({
 			name: formValues.name,
 			note: formValues.note,
@@ -58,6 +60,7 @@ export const AddItemForm: React.FC<Props> = ({ categories }) => {
 		}
 
 		toast.success('Item added successfully');
+		reset();
 		router.refresh();
 	};
 

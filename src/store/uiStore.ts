@@ -24,7 +24,7 @@ const getInitialTheme = (): string => {
 
 const useUIStore = create<State & Actions>()(set => ({
 	isShoppingListOpen: false,
-	isAddItemFormOpen: true, //TODO: change to false
+	isAddItemFormOpen: false,
 	theme: getInitialTheme(),
 	toggleShoppingList: () =>
 		set(state => ({ isShoppingListOpen: !state.isShoppingListOpen })),

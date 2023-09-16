@@ -1,11 +1,16 @@
-import { Category } from '@/interfaces/category';
+import { cookies } from 'next/headers';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Input } from '@nextui-org/input';
-import { Button } from '@nextui-org/button';
-import { AiOutlinePlus, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { CategoriesList } from '@/components/products/CategoriesList';
+import { Database } from '@/types/database';
 
-const ITEMS_MOCKUP: Category[] = [];
+export default async function Home() {
+	const supabase = createServerComponentClient<Database>({ cookies });
+	const { data: categories } = await supabase
+		.from('categories')
+		.select('*, products(*)');
 
-export default function Home() {
 	return (
 		<>
 			<header className='flex flex-col md:flex-row justify-between gap-6 md:gap-12'>
@@ -25,24 +30,7 @@ export default function Home() {
 			</header>
 
 			<section>
-				{ITEMS_MOCKUP.map(category => (
-					<div key={category.id} className='my-8'>
-						<h3 className='text-xl font-semibold'>{category.name}</h3>
-
-						<ul className='flex flex-wrap gap-4'>
-							{category.items.map(item => (
-								<li
-									key={item.id}
-									className='bg-white font-bold flex items-center justify-between gap-2 py-2 pl-4 pr-2 mt-6 shadow-light rounded-lg'>
-									<p>{item.name}</p>
-									<Button isIconOnly className='bg-transparent'>
-										<AiOutlinePlus className='text-gray-400' />
-									</Button>
-								</li>
-							))}
-						</ul>
-					</div>
-				))}
+				<CategoriesList categories={categories!} />
 			</section>
 		</>
 	);

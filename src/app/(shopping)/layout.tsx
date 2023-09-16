@@ -5,6 +5,7 @@ import { MainContent } from '@/components/MainContent';
 import { Sidebar } from '@/components/UI/Sidebar';
 import { ShoppingList } from '@/components/cart/ShoppingList';
 import { AddItemForm } from '@/components/products/AddItemForm';
+import { Database } from '@/types/database';
 
 export const metadata: Metadata = {
 	title: 'Home | Shoppingify',
@@ -16,7 +17,7 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const supabase = createServerComponentClient({
+	const supabase = createServerComponentClient<Database>({
 		cookies,
 	});
 	const {
@@ -30,7 +31,7 @@ export default async function RootLayout({
 			<Sidebar />
 			<MainContent session={session}>{children}</MainContent>
 			<ShoppingList />
-			<AddItemForm categories={categories} />
+			<AddItemForm categories={categories!} />
 		</div>
 	);
 }
