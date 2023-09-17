@@ -9,7 +9,7 @@ export default async function Home() {
 	const supabase = createServerComponentClient<Database>({ cookies });
 	const { data: categories } = await supabase
 		.from('categories')
-		.select('*, products(*)');
+		.select('*, products(*, category:categories(*))');
 
 	return (
 		<>

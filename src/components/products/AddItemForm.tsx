@@ -51,7 +51,7 @@ export const AddItemForm: React.FC<Props> = ({ categories }) => {
 			note: formValues.note,
 			image: formValues.image,
 			category_id: formValues.category,
-			user_id: user?.id,
+			user_id: user!.id,
 		});
 
 		if (error) {
@@ -133,7 +133,7 @@ export const AddItemForm: React.FC<Props> = ({ categories }) => {
 				<footer className='flex justify-center gap-4 mt-8 mb-4'>
 					<Button
 						size='lg'
-						className='bg-transparent text-gray-500 font-bold hover:bg-sky-200'
+						className='bg-transparent dark:text-gray-500 font-bold hover:bg-sky-200'
 						onPress={toggleAddItemForm}>
 						Cancel
 					</Button>

@@ -1,5 +1,10 @@
-import { User } from '@/interfaces/user';
 import { create } from 'zustand';
+
+interface User {
+	id: string;
+	fullName: string;
+	email: string;
+}
 
 type State = {
 	user?: User;

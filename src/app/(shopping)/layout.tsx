@@ -5,6 +5,7 @@ import { MainContent } from '@/components/MainContent';
 import { Sidebar } from '@/components/UI/Sidebar';
 import { ShoppingList } from '@/components/cart/ShoppingList';
 import { AddItemForm } from '@/components/products/AddItemForm';
+import { ProductInformation } from '@/components/products/ProductInformation';
 import { Database } from '@/types/database';
 
 export const metadata: Metadata = {
@@ -31,6 +32,7 @@ export default async function RootLayout({
 			<Sidebar />
 			<MainContent session={session}>{children}</MainContent>
 			<ShoppingList />
+			<ProductInformation />
 			<AddItemForm categories={categories!} />
 		</div>
 	);
