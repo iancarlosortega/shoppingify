@@ -3,18 +3,24 @@
 import Image from 'next/image';
 import { Button, useDisclosure } from '@nextui-org/react';
 import { HiArrowLongLeft } from 'react-icons/hi2';
+import { ConfirmDeleteProduct } from '@/components/modals/ConfirmDeleteProduct';
 import useUIStore from '@/store/uiStore';
 import useProductStore from '@/store/productStore';
 import { classNames } from '@/utils';
-import { ConfirmDeleteProduct } from '../modals/ConfirmDeleteProduct';
 
 export const ProductInformation = () => {
-	const { productSelected: product } = useProductStore();
+	const {
+		productSelected: product,
+		addProductToCart,
+		shoppingCart,
+	} = useProductStore();
 	const { isProductInformationOpen, toggleProductInformation } = useUIStore();
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
 	const handleAddProductToList = () => {
-		console.log('add product to list');
+		addProductToCart(product!);
+		toggleProductInformation(false);
+		localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
 	};
 
 	return (
@@ -44,7 +50,7 @@ export const ProductInformation = () => {
 						alt='Product Image'
 						width={400}
 						height={200}
-						className='rounded-lg'
+						className='rounded-lg object-cover aspect-video h-[225px]'
 					/>
 				</div>
 			</header>
