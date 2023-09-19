@@ -41,9 +41,7 @@ export const ShoppingList = () => {
 							<MdOutlineEdit className='h-6 w-6' />
 						</Button>
 					</div>
-					<div className='h-full'>
-						<CategoriesList shoppingCart={shoppingCart} />
-					</div>
+					<CategoriesList shoppingCart={shoppingCart} />
 				</main>
 			</div>
 			<footer className='p-8 bg-white dark:bg-neutral-900'>

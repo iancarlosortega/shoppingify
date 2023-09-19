@@ -11,6 +11,7 @@ type Actions = {
 	updateProductSelected: (product: Product | null) => void;
 	addProductToCart: (product: Product) => void;
 	changeProductQuantity: (product: Product, condition: Conditions) => void;
+	removeProductFromCart: (product: Product) => void;
 };
 
 type Conditions = 'increase' | 'decrease';
@@ -91,6 +92,39 @@ const useProductStore = create<State & Actions>()(set => ({
 			});
 
 			const updatedCart = { ...shoppingCart, items: updatedItems };
+			setInterval(() => {
+				localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
+			}, 100);
+
+			return {
+				shoppingCart: updatedCart,
+			};
+		}),
+	removeProductFromCart: payload =>
+		set(state => {
+			const { shoppingCart } = state;
+			const { category, id } = payload;
+
+			const cartIndex = shoppingCart?.items.findIndex(
+				item => item.id === category.id
+			);
+
+			const updatedItems = shoppingCart.items.map((cart, index) => {
+				if (index === cartIndex) {
+					const productIndex = cart.products.findIndex(
+						product => product.id === id
+					);
+					cart.products.splice(productIndex, 1);
+				}
+				return cart;
+			});
+
+			// And remove category if empty
+			const updatedItemsFiltered = updatedItems.filter(
+				item => item.products.length > 0
+			);
+
+			const updatedCart = { ...shoppingCart, items: updatedItemsFiltered };
 			setInterval(() => {
 				localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
 			}, 100);

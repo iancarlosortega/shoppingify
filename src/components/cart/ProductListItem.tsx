@@ -13,7 +13,7 @@ interface Props {
 
 export const ProductListItem: React.FC<Props> = ({ product }) => {
 	const [isEditting, setIsEditting] = useState(false);
-	const { changeProductQuantity } = useProductStore();
+	const { changeProductQuantity, removeProductFromCart } = useProductStore();
 
 	return (
 		<li className='flex justify-between items-center my-3 relative overflow-hidden'>
@@ -21,10 +21,14 @@ export const ProductListItem: React.FC<Props> = ({ product }) => {
 			<div
 				className={`${
 					isEditting
-						? 'bg-white opacity-1 translate-x-0'
-						: 'bg-primary-lt opacity-0 translate-x-[80px]'
+						? 'bg-white opacity-1 translate-x-0 visible'
+						: 'bg-primary-lt opacity-0 translate-x-[80px] invisible'
 				} flex items-center rounded-full h-10 relative transition-all`}>
-				<Button radius='lg' isIconOnly className='bg-primary'>
+				<Button
+					radius='lg'
+					isIconOnly
+					className='bg-primary'
+					onPress={() => removeProductFromCart(product)}>
 					<MdOutlineDeleteOutline className='text-white font-bold' />
 				</Button>
 				<Button
@@ -45,9 +49,9 @@ export const ProductListItem: React.FC<Props> = ({ product }) => {
 				radius='full'
 				variant='bordered'
 				onPress={() => setIsEditting(!isEditting)}
-				className={`border-primary text-primary border-2 font-bold my-1 absolute ${
+				className={`${
 					isEditting ? '-translate-x-10' : 'translate-x-0'
-				} right-0 transition-all duration-1000 ease-in`}>
+				} border-primary text-primary border-2 font-bold my-1 absolute right-0 transition-all duration-1000 ease-in`}>
 				{product.quantity} <span className='font-medium'>pcs</span>
 			</Button>
 		</li>
