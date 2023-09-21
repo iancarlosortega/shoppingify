@@ -7,4 +7,5 @@ export type Product = ProductEntity & {
 	category: Category;
 } & {
 	quantity?: number;
+	isChecked?: boolean;
 };

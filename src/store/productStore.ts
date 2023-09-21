@@ -11,8 +11,10 @@ type State = {
 type Actions = {
 	updateProductSelected: (product: Product | null) => void;
 	setShoppingCartName: (name: string) => void;
+	toggleEdittingMode: () => void;
 	addProductToCart: (product: Product) => void;
 	changeProductQuantity: (product: Product, condition: Conditions) => void;
+	toggleProductCheck: (product: Product) => void;
 	removeProductFromCart: (product: Product) => void;
 };
 
@@ -22,7 +24,7 @@ const useProductStore = create<State & Actions>()(
 	persist(
 		set => ({
 			productSelected: null,
-			shoppingCart: { name: '', items: [] },
+			shoppingCart: { name: 'Shopping List', items: [], isEdittingMode: false },
 			updateProductSelected: payload =>
 				set({
 					productSelected: payload,
@@ -31,6 +33,18 @@ const useProductStore = create<State & Actions>()(
 				set(state => {
 					const { shoppingCart } = state;
 					const updatedCart = { ...shoppingCart, name: payload };
+
+					return {
+						shoppingCart: updatedCart,
+					};
+				}),
+			toggleEdittingMode: () =>
+				set(state => {
+					const { shoppingCart } = state;
+					const updatedCart = {
+						...shoppingCart,
+						isEdittingMode: !shoppingCart.isEdittingMode,
+					};
 
 					return {
 						shoppingCart: updatedCart,
@@ -53,6 +67,7 @@ const useProductStore = create<State & Actions>()(
 							if (productIndex === -1) {
 								cart.products.push({
 									...payload,
+									isChecked: false,
 									quantity: 1,
 								});
 							} else {
@@ -66,7 +81,7 @@ const useProductStore = create<State & Actions>()(
 						updatedItems.push({
 							id: category.id,
 							category: category.name,
-							products: [{ ...payload, quantity: 1 }],
+							products: [{ ...payload, isChecked: false, quantity: 1 }],
 						});
 					}
 
@@ -93,6 +108,30 @@ const useProductStore = create<State & Actions>()(
 									cart.products[productIndex].quantity!--;
 								}
 							} else cart.products[productIndex].quantity!++;
+						}
+						return cart;
+					});
+
+					return {
+						shoppingCart: { ...shoppingCart, items: updatedItems },
+					};
+				}),
+			toggleProductCheck: payload =>
+				set(state => {
+					const { shoppingCart } = state;
+					const { category, id } = payload;
+
+					const cartIndex = shoppingCart?.items.findIndex(
+						item => item.id === category.id
+					);
+
+					const updatedItems = shoppingCart.items.map((cart, index) => {
+						if (index === cartIndex) {
+							const productIndex = cart.products.findIndex(
+								product => product.id === id
+							);
+							cart.products[productIndex].isChecked =
+								!cart.products[productIndex].isChecked;
 						}
 						return cart;
 					});
@@ -131,8 +170,13 @@ const useProductStore = create<State & Actions>()(
 				}),
 		}),
 		{
-			name: 'shoppingCart', // name of the item in the storage (must be unique)
-			storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+			name: 'shoppingCart',
+			storage: createJSONStorage(() => localStorage),
+			partialize(state) {
+				return {
+					shoppingCart: state.shoppingCart,
+				};
+			},
 		}
 	)
 );

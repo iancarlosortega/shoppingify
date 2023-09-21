@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Button } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
+import { Button, Checkbox } from '@nextui-org/react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import useProductStore from '@/store/productStore';
@@ -13,11 +13,38 @@ interface Props {
 
 export const ProductListItem: React.FC<Props> = ({ product }) => {
 	const [isEditting, setIsEditting] = useState(false);
-	const { changeProductQuantity, removeProductFromCart } = useProductStore();
+	const {
+		shoppingCart,
+		changeProductQuantity,
+		removeProductFromCart,
+		toggleProductCheck,
+	} = useProductStore();
+
+	const handleToggleEditting = () => {
+		if (shoppingCart.isEdittingMode) return;
+		setIsEditting(!isEditting);
+	};
+
+	useEffect(() => {
+		setIsEditting(false);
+	}, [shoppingCart.isEdittingMode]);
 
 	return (
 		<li className='flex justify-between items-center my-3 relative overflow-hidden'>
-			<p className='text-lg font-semibold'>{product.name}</p>
+			{shoppingCart.isEdittingMode ? (
+				<Checkbox
+					onValueChange={() => toggleProductCheck(product)}
+					lineThrough={product.isChecked}
+					isSelected={product.isChecked}
+					classNames={{
+						wrapper: 'animate-appearance-in',
+						label: 'text-lg font-semibold',
+					}}>
+					{product.name}
+				</Checkbox>
+			) : (
+				<p className='text-lg font-semibold'>{product.name}</p>
+			)}
 			<div
 				className={`${
 					isEditting
@@ -48,7 +75,7 @@ export const ProductListItem: React.FC<Props> = ({ product }) => {
 				size='sm'
 				radius='full'
 				variant='bordered'
-				onPress={() => setIsEditting(!isEditting)}
+				onPress={handleToggleEditting}
 				className={`${
 					isEditting ? '-translate-x-10' : 'translate-x-0'
 				} border-primary text-primary border-2 font-bold my-1 absolute right-0 transition-all duration-1000 ease-in`}>

@@ -12,7 +12,7 @@ export const ProductInformation = () => {
 	const {
 		productSelected: product,
 		addProductToCart,
-		shoppingCart,
+		updateProductSelected,
 	} = useProductStore();
 	const { isProductInformationOpen, toggleProductInformation } = useUIStore();
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -20,7 +20,6 @@ export const ProductInformation = () => {
 	const handleAddProductToList = () => {
 		addProductToCart(product!);
 		toggleProductInformation(false);
-		localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
 	};
 
 	return (

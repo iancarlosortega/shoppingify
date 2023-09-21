@@ -3,6 +3,7 @@ import { Product } from './products';
 export type Cart = {
 	id?: string;
 	name: string;
+	isEdittingMode: boolean;
 	items: CartItem[];
 };
 

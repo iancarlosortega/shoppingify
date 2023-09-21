@@ -8,6 +8,7 @@ import { AddItemForm } from '@/components/products/AddItemForm';
 import { ProductInformation } from '@/components/products/ProductInformation';
 import { Database } from '@/types/database';
 import { Category } from '@/types/categories';
+import { ClientOnly } from '@/components/ClientOnly';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,11 +46,13 @@ export default async function RootLayout({
 
 	return (
 		<div className='min-h-screen h-full w-full'>
-			<Sidebar />
-			<MainContent session={session}>{children}</MainContent>
-			<ShoppingList />
-			<ProductInformation />
-			<AddItemForm categories={categories} />
+			<ClientOnly>
+				<Sidebar />
+				<MainContent session={session}>{children}</MainContent>
+				<ShoppingList />
+				<ProductInformation />
+				<AddItemForm categories={categories} />
+			</ClientOnly>
 		</div>
 	);
 }

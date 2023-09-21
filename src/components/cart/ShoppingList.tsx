@@ -16,7 +16,8 @@ interface IFormValues {
 
 export const ShoppingList = () => {
 	const { isShoppingListOpen, toggleAddItemForm } = useUIStore();
-	const { shoppingCart, setShoppingCartName } = useProductStore();
+	const { shoppingCart, setShoppingCartName, toggleEdittingMode } =
+		useProductStore();
 	const {
 		register,
 		handleSubmit,
@@ -53,10 +54,8 @@ export const ShoppingList = () => {
 				</header>
 
 				<div className='flex items-center justify-between my-6'>
-					<h3 className='text-2xl font-bold'>
-						{shoppingCart.name ? shoppingCart.name : 'Shopping List'}
-					</h3>
-					<button className='bg-transparent mr-2'>
+					<h3 className='text-2xl font-bold'>{shoppingCart.name}</h3>
+					<button onClick={toggleEdittingMode} className='bg-transparent mr-2'>
 						<MdOutlineEdit className='h-6 w-6' />
 					</button>
 				</div>
@@ -73,7 +72,7 @@ export const ShoppingList = () => {
 				</main>
 			</div>
 
-			<footer className='p-8 bg-white dark:bg-neutral-900'>
+			<footer className='p-8 bg-white dark:bg-neutral-900 relative'>
 				<form
 					autoComplete='off'
 					onSubmit={handleSubmit(onSubmit)}
@@ -85,8 +84,6 @@ export const ShoppingList = () => {
 						color={errors.name ? 'danger' : undefined}
 						errorMessage={errors.name?.message}
 						isDisabled={shoppingCart.items.length === 0}
-						disabled={shoppingCart.items.length === 0}
-						className='disabled:!border-gray-300'
 						classNames={{
 							inputWrapper: [
 								'border border-2 border-primary dark:border-none',
@@ -113,6 +110,24 @@ export const ShoppingList = () => {
 						Save
 					</Button>
 				</form>
+
+				<div
+					className={`${
+						shoppingCart.isEdittingMode
+							? 'opacity-1 translate-x-0 visible'
+							: 'opacity-0 translate-x-[80px] invisible'
+					} absolute top-0 right-0 w-full bg-white z-20 p-8 flex justify-center gap-4 transition-all`}>
+					<Button
+						size='lg'
+						className='bg-transparent dark:text-gray-500 font-bold hover:bg-sky-200'
+						onPress={toggleAddItemForm}>
+						Cancel
+					</Button>
+
+					<Button size='lg' className='bg-secondary text-white font-bold'>
+						Complete
+					</Button>
+				</div>
 			</footer>
 		</aside>
 	);
