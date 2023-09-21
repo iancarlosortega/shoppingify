@@ -16,6 +16,7 @@ type Actions = {
 	changeProductQuantity: (product: Product, condition: Conditions) => void;
 	toggleProductCheck: (product: Product) => void;
 	removeProductFromCart: (product: Product) => void;
+	cleanShoppingCart: () => void;
 };
 
 type Conditions = 'increase' | 'decrease';
@@ -167,6 +168,14 @@ const useProductStore = create<State & Actions>()(
 					return {
 						shoppingCart: { ...shoppingCart, items: updatedItemsFiltered },
 					};
+				}),
+			cleanShoppingCart: () =>
+				set({
+					shoppingCart: {
+						name: 'Shopping List',
+						items: [],
+						isEdittingMode: false,
+					},
 				}),
 		}),
 		{

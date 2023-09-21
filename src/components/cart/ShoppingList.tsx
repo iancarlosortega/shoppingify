@@ -1,23 +1,36 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { Button, Input } from '@nextui-org/react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Button, Input, useDisclosure } from '@nextui-org/react';
 import { MdOutlineEdit } from 'react-icons/md';
+import { toast } from 'sonner';
+import useAuthStore from '@/store/authStore';
 import useUIStore from '@/store/uiStore';
 import useProductStore from '@/store/productStore';
 import { BottleIcon } from '@/components/icons/BottleIcon';
 import { CategoriesList } from './CategoriesList';
 import { NoItemsDraw } from '../UI/NoItemsDraw';
 import { classNames } from '@/utils';
+import { Database } from '@/types/database';
+import { ConfirmCancelList } from '../modals/ConfirmCancelList';
 
 interface IFormValues {
 	name: string;
 }
 
 export const ShoppingList = () => {
+	const { user } = useAuthStore();
 	const { isShoppingListOpen, toggleAddItemForm } = useUIStore();
-	const { shoppingCart, setShoppingCartName, toggleEdittingMode } =
-		useProductStore();
+	const {
+		shoppingCart,
+		setShoppingCartName,
+		toggleEdittingMode,
+		cleanShoppingCart,
+	} = useProductStore();
+	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+	const supabase = createClientComponentClient<Database>();
 	const {
 		register,
 		handleSubmit,
@@ -28,6 +41,24 @@ export const ShoppingList = () => {
 	const onSubmit = (formData: IFormValues) => {
 		setShoppingCartName(formData.name);
 		reset();
+	};
+
+	const markAsComplete = async () => {
+		const { error } = await supabase.from('shopping_lists').insert({
+			name: shoppingCart.name,
+			state: true,
+			items: shoppingCart.items,
+			user_id: user!.id,
+		});
+
+		if (error) {
+			console.log(error);
+			toast.error(error.message);
+			return;
+		}
+
+		toast.success('Shopping List Completed');
+		cleanShoppingCart();
 	};
 
 	return (
@@ -120,15 +151,23 @@ export const ShoppingList = () => {
 					<Button
 						size='lg'
 						className='bg-transparent dark:text-gray-500 font-bold hover:bg-sky-200'
-						onPress={toggleAddItemForm}>
+						onPress={onOpen}>
 						Cancel
 					</Button>
 
-					<Button size='lg' className='bg-secondary text-white font-bold'>
+					<Button
+						size='lg'
+						className='bg-secondary text-white font-bold'
+						onClick={markAsComplete}>
 						Complete
 					</Button>
 				</div>
 			</footer>
+			<ConfirmCancelList
+				isOpen={isOpen}
+				onChange={onOpenChange}
+				onClose={onClose}
+			/>
 		</aside>
 	);
 };
