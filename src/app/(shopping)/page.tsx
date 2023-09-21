@@ -4,6 +4,9 @@ import { Input } from '@nextui-org/input';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { CategoriesList } from '@/components/products/CategoriesList';
 import { Database } from '@/types/database';
+import { Category } from '@/types/categories';
+
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
 	const supabase = createServerComponentClient<Database>({ cookies });
@@ -30,7 +33,7 @@ export default async function Home() {
 			</header>
 
 			<section>
-				<CategoriesList categories={categories!} />
+				<CategoriesList categories={categories as Category[]} />
 			</section>
 		</>
 	);
