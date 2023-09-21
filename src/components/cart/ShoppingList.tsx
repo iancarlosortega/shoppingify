@@ -6,10 +6,26 @@ import useUIStore from '@/store/uiStore';
 import useProductStore from '@/store/productStore';
 import { BottleIcon } from '@/components/icons/BottleIcon';
 import { CategoriesList } from './CategoriesList';
+import { useForm } from 'react-hook-form';
+
+interface IFormValues {
+	name: string;
+}
 
 export const ShoppingList = () => {
 	const { isShoppingListOpen, toggleAddItemForm } = useUIStore();
-	const { shoppingCart } = useProductStore();
+	const { shoppingCart, setShoppingCartName } = useProductStore();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm<IFormValues>();
+
+	const onSubmit = (formData: IFormValues) => {
+		setShoppingCartName(formData.name);
+		reset();
+	};
 
 	return (
 		<aside
@@ -36,33 +52,48 @@ export const ShoppingList = () => {
 
 				<main>
 					<div className='flex items-center justify-between my-6'>
-						<h3 className='text-2xl font-bold'>Shopping List</h3>
-						<Button className='bg-transparent'>
+						<h3 className='text-2xl font-bold'>
+							{shoppingCart.name ? shoppingCart.name : 'Shopping List'}
+						</h3>
+						<button className='bg-transparent mr-2'>
 							<MdOutlineEdit className='h-6 w-6' />
-						</Button>
+						</button>
 					</div>
 					<CategoriesList shoppingCart={shoppingCart} />
 				</main>
 			</div>
 			<footer className='p-8 bg-white dark:bg-neutral-900'>
-				<div className='flex relative'>
+				<form
+					autoComplete='off'
+					onSubmit={handleSubmit(onSubmit)}
+					className='flex relative'>
 					<Input
 						size='lg'
 						type='text'
-						placeholder='Enter a name'
+						placeholder='Change name'
+						color={errors.name ? 'danger' : undefined}
+						errorMessage={errors.name?.message}
 						classNames={{
 							inputWrapper: [
 								'border border-2 border-primary dark:border-none',
 								'focus-within:!ring-0 w-[80%] focus-within:!ring-transparent pr-10',
 							],
 						}}
+						{...register('name', {
+							required: 'This field is required',
+							minLength: {
+								value: 3,
+								message: 'Minimum length should be 3',
+							},
+						})}
 					/>
 					<Button
 						size='lg'
+						type='submit'
 						className='bg-primary text-white font-bold absolute right-0 z-10'>
 						Save
 					</Button>
-				</div>
+				</form>
 			</footer>
 		</aside>
 	);

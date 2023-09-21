@@ -9,6 +9,7 @@ type State = {
 
 type Actions = {
 	updateProductSelected: (product: Product | null) => void;
+	setShoppingCartName: (name: string) => void;
 	addProductToCart: (product: Product) => void;
 	changeProductQuantity: (product: Product, condition: Conditions) => void;
 	removeProductFromCart: (product: Product) => void;
@@ -24,6 +25,18 @@ const useProductStore = create<State & Actions>()(set => ({
 	updateProductSelected: payload =>
 		set({
 			productSelected: payload,
+		}),
+	setShoppingCartName: payload =>
+		set(state => {
+			const { shoppingCart } = state;
+			const updatedCart = { ...shoppingCart, name: payload };
+			setInterval(() => {
+				localStorage.setItem('shoppingCart', JSON.stringify(updatedCart));
+			}, 100);
+
+			return {
+				shoppingCart: updatedCart,
+			};
 		}),
 	addProductToCart: payload =>
 		set(state => {

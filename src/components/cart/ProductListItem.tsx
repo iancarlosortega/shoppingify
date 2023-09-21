@@ -21,7 +21,7 @@ export const ProductListItem: React.FC<Props> = ({ product }) => {
 			<div
 				className={`${
 					isEditting
-						? 'bg-white opacity-1 translate-x-0 visible'
+						? 'bg-white dark:bg-neutral-900 opacity-1 translate-x-0 visible'
 						: 'bg-primary-lt opacity-0 translate-x-[80px] invisible'
 				} flex items-center rounded-full h-10 relative transition-all`}>
 				<Button
