@@ -25,7 +25,7 @@ export const ConfirmCancelList = ({
 	const handleCancelList = async () => {
 		const { error } = await supabase.from('shopping_lists').insert({
 			name: shoppingCart.name,
-			state: false,
+			state: 'cancelled',
 			items: shoppingCart.items,
 			user_id: user!.id,
 		});
@@ -57,10 +57,10 @@ export const ConfirmCancelList = ({
 							</ModalBody>
 							<ModalFooter>
 								<Button color='default' variant='light' onPress={onClose}>
-									Cancel
+									No
 								</Button>
 								<Button color='danger' onPress={handleCancelList}>
-									Yes
+									Yes!
 								</Button>
 							</ModalFooter>
 						</form>

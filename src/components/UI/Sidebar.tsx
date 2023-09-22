@@ -66,6 +66,7 @@ export const Sidebar = () => {
 	useLayoutEffect(() => {
 		function updateSize() {
 			setSize([window.innerWidth, window.innerHeight]);
+			console.log([window.innerWidth, window.innerHeight]);
 		}
 		window.addEventListener('resize', updateSize);
 		updateSize();
@@ -92,7 +93,7 @@ export const Sidebar = () => {
 			height,
 			top,
 		});
-	}, [pathname]);
+	}, [pathname, size]);
 
 	return (
 		<aside className='w-[80px] min-h-screen flex flex-col justify-between fixed dark:bg-neutral-900'>

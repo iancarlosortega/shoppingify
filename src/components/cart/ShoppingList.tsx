@@ -46,7 +46,7 @@ export const ShoppingList = () => {
 	const markAsComplete = async () => {
 		const { error } = await supabase.from('shopping_lists').insert({
 			name: shoppingCart.name,
-			state: true,
+			state: 'completed',
 			items: shoppingCart.items,
 			user_id: user!.id,
 		});
@@ -66,7 +66,7 @@ export const ShoppingList = () => {
 			className={` ${
 				isShoppingListOpen ? 'translate-x-0' : 'translate-x-[400px]'
 			} w-[400px] max-w-[80%] lg:translate-x-0 flex flex-col fixed top-0 right-0 h-full transition-transform duration-300 ease-in`}>
-			<div className='p-8 flex flex-1 flex-col bg-primary-lt dark:bg-neutral-800'>
+			<div className='p-8 flex h-[calc(100%-8rem)] flex-col bg-primary-lt dark:bg-neutral-800'>
 				<header className='h-[135px] flex gap-4 bg-tertiary-dk rounded-3xl py-4 px-6 relative'>
 					<div className='absolute left-0 md:left-auto top-[-15px]'>
 						<BottleIcon />
@@ -91,7 +91,7 @@ export const ShoppingList = () => {
 					</button>
 				</div>
 
-				<main className='flex-1'>
+				<main className='overflow-y-scroll'>
 					{shoppingCart.items.length === 0 ? (
 						<div className='h-full flex items-center justify-center relative'>
 							<p>No Items</p>
@@ -103,7 +103,7 @@ export const ShoppingList = () => {
 				</main>
 			</div>
 
-			<footer className='p-8 bg-white dark:bg-neutral-900 relative'>
+			<footer className='p-8 h-[8rem] bg-white dark:bg-neutral-900 relative'>
 				<form
 					autoComplete='off'
 					onSubmit={handleSubmit(onSubmit)}

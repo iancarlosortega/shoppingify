@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@nextui-org/react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import useProductStore from '@/store/productStore';
 import useUIStore from '@/store/uiStore';
@@ -12,27 +11,44 @@ interface Props {
 }
 
 export const ProductCard: React.FC<Props> = ({ product }) => {
-	const { updateProductSelected } = useProductStore();
+	const { updateProductSelected, addProductToCart, productSelected } =
+		useProductStore();
 	const { isProductInformationOpen, toggleProductInformation } = useUIStore();
 
-	const handleClick = () => {
+	const handleToggleProductInformation = () => {
+		// If the product is already selected, we close the product information
+		if (productSelected?.id === product.id) {
+			toggleProductInformation(false);
+			updateProductSelected(null);
+			return;
+		}
+
 		updateProductSelected(product);
-		if (isProductInformationOpen) return;
-		toggleProductInformation(true);
+
+		if (!isProductInformationOpen) {
+			toggleProductInformation(true);
+		}
+	};
+
+	const addProduct = (e: any) => {
+		e.stopPropagation();
+		addProductToCart(product);
 	};
 
 	return (
 		<li>
-			<Button
-				onClick={handleClick}
+			<div
+				onClick={handleToggleProductInformation}
 				className={classNames(
-					'bg-white font-bold flex items-center justify-between gap-2',
-					'py-2 pl-4 pr-2 mt-6 shadow-light rounded-lg',
+					'bg-white mt-6 font-bold flex items-center justify-between gap-2',
+					'shadow-light rounded-lg cursor-pointer',
 					'dark:bg-neutral-700 dark:text-white'
 				)}>
-				{product.name}
-				<AiOutlinePlus className='text-gray-400' />
-			</Button>
+				<p className='py-2 pl-4 pr-2'>{product.name}</p>
+				<button className='p-2 rounded-lg' onClick={addProduct}>
+					<AiOutlinePlus className='text-gray-400' />
+				</button>
+			</div>
 		</li>
 	);
 };

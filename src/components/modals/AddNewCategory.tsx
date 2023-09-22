@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { toast } from 'sonner';
@@ -23,11 +23,20 @@ export const AddNewCategory = ({
 }: UseDisclosureProps) => {
 	const [newCategory, setNewCategory] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
+	const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 	const { user } = useAuthStore();
 	const router = useRouter();
 	const supabase = createClientComponentClient();
 
+	useEffect(() => {
+		if (!isOpen) {
+			setNewCategory('');
+			setErrorMessage('');
+		}
+	}, [isOpen]);
+
 	const onSaveCategory = async () => {
+		setIsFormSubmitted(true);
 		if (newCategory.trim() === '') {
 			setErrorMessage('Field cannot be empty');
 			return;
@@ -74,13 +83,18 @@ export const AddNewCategory = ({
 						<form>
 							<ModalBody>
 								<Input
+									autoFocus
 									type='text'
 									label='Name'
 									placeholder='Enter a category'
 									value={newCategory}
 									onChange={onChangeInput}
-									color={errorMessage ? 'danger' : undefined}
-									errorMessage={errorMessage}
+									color={isFormSubmitted && errorMessage ? 'danger' : undefined}
+									errorMessage={isFormSubmitted && errorMessage}
+									classNames={{
+										inputWrapper:
+											'group-data-[focus-visible=true]:ring-primary',
+									}}
 								/>
 							</ModalBody>
 							<ModalFooter>
