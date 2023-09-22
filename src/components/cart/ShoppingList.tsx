@@ -2,8 +2,12 @@
 
 import { useForm } from 'react-hook-form';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Button, Input, useDisclosure } from '@nextui-org/react';
-import { MdOutlineEdit } from 'react-icons/md';
+import { Button, Input, Tooltip, useDisclosure } from '@nextui-org/react';
+import {
+	MdOutlineEdit,
+	MdOutlineEditOff,
+	MdRemoveShoppingCart,
+} from 'react-icons/md';
 import { toast } from 'sonner';
 import useAuthStore from '@/store/authStore';
 import useUIStore from '@/store/uiStore';
@@ -14,6 +18,7 @@ import { NoItemsDraw } from '../UI/NoItemsDraw';
 import { classNames } from '@/utils';
 import { Database } from '@/types/database';
 import { ConfirmCancelList } from '../modals/ConfirmCancelList';
+import { ConfirmClearList } from '../modals/ConfirmClearList';
 
 interface IFormValues {
 	name: string;
@@ -29,18 +34,30 @@ export const ShoppingList = () => {
 		cleanShoppingCart,
 	} = useProductStore();
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+	const {
+		isOpen: isOpenClear,
+		onOpen: onOpenClear,
+		onOpenChange: onOpenChangeClear,
+		onClose: onCloseClear,
+	} = useDisclosure();
 
 	const supabase = createClientComponentClient<Database>();
 	const {
 		register,
 		handleSubmit,
 		reset,
+		setFocus,
 		formState: { errors },
 	} = useForm<IFormValues>();
 
 	const onSubmit = (formData: IFormValues) => {
 		setShoppingCartName(formData.name);
 		reset();
+	};
+
+	const handleEdittingMode = () => {
+		toggleEdittingMode();
+		if (shoppingCart.isEdittingMode) setFocus('name');
 	};
 
 	const markAsComplete = async () => {
@@ -85,16 +102,66 @@ export const ShoppingList = () => {
 				</header>
 
 				<div className='flex items-center justify-between my-6'>
-					<h3 className='text-2xl font-bold'>{shoppingCart.name}</h3>
-					<button onClick={toggleEdittingMode} className='bg-transparent mr-2'>
-						<MdOutlineEdit className='h-6 w-6' />
-					</button>
+					<div className='flex justify-start gap-2'>
+						<h3 className='text-2xl font-bold'>{shoppingCart.name}</h3>
+						<Tooltip
+							hidden={shoppingCart.items.length === 0}
+							showArrow
+							content='toggle edit mode'
+							placement='bottom'
+							closeDelay={300}
+							classNames={{
+								base: 'shadow-xl text-white bg-dark',
+								arrow: 'bg-dark',
+							}}>
+							<button
+								disabled={shoppingCart.items.length === 0}
+								onClick={handleEdittingMode}
+								className={classNames(
+									'bg-transparent',
+									'hover:text-gray-700 transition-colors ease-in',
+									'disabled:text-gray-700 disabled:cursor-not-allowed'
+								)}>
+								{shoppingCart.isEdittingMode ? (
+									<MdOutlineEdit className='h-6 w-6' />
+								) : (
+									<MdOutlineEditOff className='h-6 w-6' />
+								)}
+							</button>
+						</Tooltip>
+					</div>
+					<Tooltip
+						hidden={shoppingCart.items.length === 0}
+						showArrow
+						content='clear list'
+						placement='bottom'
+						closeDelay={300}
+						classNames={{
+							base: 'shadow-xl text-white bg-dark',
+							arrow: 'bg-dark',
+						}}>
+						<button
+							disabled={shoppingCart.items.length === 0}
+							onClick={onOpenClear}
+							className={classNames(
+								'bg-transparent mr-2',
+								'hover:text-gray-700 transition-colors ease-in',
+								'disabled:text-gray-700 disabled:cursor-not-allowed'
+							)}>
+							<MdRemoveShoppingCart className='h-6 w-6' />
+						</button>
+					</Tooltip>
 				</div>
 
-				<main className='overflow-y-scroll'>
+				<main
+					className={`h-full ${
+						shoppingCart.items.length > 0
+							? 'overflow-y-scroll'
+							: 'overflow-y-visible'
+					}`}>
 					{shoppingCart.items.length === 0 ? (
 						<div className='h-full flex items-center justify-center relative'>
-							<p>No Items</p>
+							<p className='font-bold'>No Items</p>
 							<NoItemsDraw className='absolute -bottom-10 left-[13%] z-10' />
 						</div>
 					) : (
@@ -167,6 +234,12 @@ export const ShoppingList = () => {
 				isOpen={isOpen}
 				onChange={onOpenChange}
 				onClose={onClose}
+			/>
+
+			<ConfirmClearList
+				isOpen={isOpenClear}
+				onChange={onOpenChangeClear}
+				onClose={onCloseClear}
 			/>
 		</aside>
 	);
