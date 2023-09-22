@@ -1,4 +1,5 @@
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import {
 	Button,
@@ -21,6 +22,7 @@ export const ConfirmCancelList = ({
 	const { shoppingCart, cleanShoppingCart } = useProductStore();
 	const { user } = useAuthStore();
 	const supabase = createClientComponentClient<Database>();
+	const router = useRouter();
 
 	const handleCancelList = async () => {
 		const { error } = await supabase.from('shopping_lists').insert({
@@ -39,6 +41,7 @@ export const ConfirmCancelList = ({
 		toast.error('Shopping List Cancelled');
 		onClose!();
 		cleanShoppingCart();
+		router.refresh();
 	};
 
 	return (

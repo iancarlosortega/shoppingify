@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Button, Input, Tooltip, useDisclosure } from '@nextui-org/react';
@@ -42,6 +43,7 @@ export const ShoppingList = () => {
 	} = useDisclosure();
 
 	const supabase = createClientComponentClient<Database>();
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -76,6 +78,7 @@ export const ShoppingList = () => {
 
 		toast.success('Shopping List Completed');
 		cleanShoppingCart();
+		router.refresh();
 	};
 
 	return (

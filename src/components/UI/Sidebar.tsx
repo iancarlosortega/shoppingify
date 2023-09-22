@@ -66,7 +66,6 @@ export const Sidebar = () => {
 	useLayoutEffect(() => {
 		function updateSize() {
 			setSize([window.innerWidth, window.innerHeight]);
-			console.log([window.innerWidth, window.innerHeight]);
 		}
 		window.addEventListener('resize', updateSize);
 		updateSize();
