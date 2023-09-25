@@ -3,9 +3,13 @@ import { Category } from '@/types/categories';
 
 interface Props {
 	categories: Category[];
+	showQuantities?: boolean;
 }
 
-export const CategoriesList: React.FC<Props> = ({ categories }) => {
+export const CategoriesList: React.FC<Props> = ({
+	categories,
+	showQuantities = false,
+}) => {
 	return (
 		<>
 			{categories.map(
@@ -15,7 +19,11 @@ export const CategoriesList: React.FC<Props> = ({ categories }) => {
 							<h3 className='text-xl font-semibold'>{category.name}</h3>
 							<ul className='flex flex-wrap gap-4'>
 								{category.products?.map(product => (
-									<ProductCard key={product.id} product={product} />
+									<ProductCard
+										key={product.id}
+										product={product}
+										showQuantity={showQuantities}
+									/>
 								))}
 							</ul>
 						</div>

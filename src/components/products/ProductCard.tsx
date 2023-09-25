@@ -8,9 +8,13 @@ import { Product } from '@/types/products';
 
 interface Props {
 	product: Product;
+	showQuantity?: boolean;
 }
 
-export const ProductCard: React.FC<Props> = ({ product }) => {
+export const ProductCard: React.FC<Props> = ({
+	product,
+	showQuantity = false,
+}) => {
 	const { updateProductSelected, addProductToCart, productSelected } =
 		useProductStore();
 	const { isProductInformationOpen, toggleProductInformation } = useUIStore();
@@ -40,14 +44,20 @@ export const ProductCard: React.FC<Props> = ({ product }) => {
 			<div
 				onClick={handleToggleProductInformation}
 				className={classNames(
-					'bg-white mt-6 font-bold flex items-center justify-between gap-2',
+					'bg-white mt-6 font-bold flex items-center justify-between gap-4',
 					'shadow-light rounded-lg cursor-pointer',
 					'dark:bg-neutral-700 dark:text-white'
 				)}>
 				<p className='py-2 pl-4 pr-2'>{product.name}</p>
-				<button className='p-2 rounded-lg' onClick={addProduct}>
-					<AiOutlinePlus className='text-gray-400' />
-				</button>
+				{showQuantity ? (
+					<p className='font-bold text-primary text-sm pr-4'>
+						{product.quantity} <span className='font-medium'>pcs</span>
+					</p>
+				) : (
+					<button className='p-2 rounded-lg' onClick={addProduct}>
+						<AiOutlinePlus className='text-gray-400' />
+					</button>
+				)}
 			</div>
 		</li>
 	);

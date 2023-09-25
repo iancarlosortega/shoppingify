@@ -9,6 +9,6 @@ export type Cart = {
 
 type CartItem = {
 	id: string;
-	category: string;
+	name: string;
 	products: Product[];
 };

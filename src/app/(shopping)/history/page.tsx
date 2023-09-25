@@ -1,18 +1,31 @@
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { HistoryList } from '@/components/history/HistoryList';
 import { Database } from '@/types/database';
 import { History } from '@/types/history';
 
+export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+	title: 'History | Shoppingify',
+	description: 'History of shopping lists created.',
+};
+
 const getHistory = async (): Promise<Record<string, History[]>> => {
 	const supabase = createServerComponentClient<Database>({
 		cookies,
 	});
 
-	const { data: shoppingLists } = await supabase
+	const { data: shoppingLists, error } = await supabase
 		.from('shopping_lists')
 		.select()
 		.order('created_at', { ascending: false });
+
+	if (error) {
+		console.error(error);
+		return {};
+	}
 
 	const groupedResults = shoppingLists?.reduce((acc, curr) => {
 		const date = new Date(curr.created_at);

@@ -10,7 +10,7 @@ export const CategoriesList: React.FC<Props> = ({ shoppingCart }) => {
 		<>
 			{shoppingCart.items.map(item => (
 				<div key={item.id} className='mb-6'>
-					<h5 className='text-[#828282] text-sm'>{item.category}</h5>
+					<h5 className='text-[#828282] text-sm'>{item.name}</h5>
 					<ul>
 						{item.products.map(product => (
 							<ProductListItem key={product.id} product={product} />

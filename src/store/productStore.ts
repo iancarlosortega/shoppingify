@@ -81,7 +81,7 @@ const useProductStore = create<State & Actions>()(
 					if (cartIndex === -1) {
 						updatedItems.push({
 							id: category.id,
-							category: category.name,
+							name: category.name,
 							products: [{ ...payload, isChecked: false, quantity: 1 }],
 						});
 					}

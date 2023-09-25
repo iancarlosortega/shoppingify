@@ -1,4 +1,6 @@
-export type Json =
+Need to install the following packages:
+supabase@1.99.5
+Ok to proceed? (y) export type Json =
   | string
   | number
   | boolean
@@ -74,6 +76,40 @@ export interface Database {
           },
           {
             foreignKeyName: "products_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      shopping_lists: {
+        Row: {
+          created_at: string
+          id: string
+          items: Json
+          name: string
+          state: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          items: Json
+          name: string
+          state: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          items?: Json
+          name?: string
+          state?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shopping_lists_user_id_fkey"
             columns: ["user_id"]
             referencedRelation: "users"
             referencedColumns: ["id"]

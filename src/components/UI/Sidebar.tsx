@@ -22,6 +22,7 @@ import useUIStore from '@/store/uiStore';
 import { Logo } from '@/components/icons';
 import { classNames } from '@/utils';
 import { ThemeToggle } from './ThemeToggle';
+import useProductStore from '@/store/productStore';
 
 interface ActiveBorder {
 	height?: number;
@@ -29,6 +30,7 @@ interface ActiveBorder {
 }
 
 export const Sidebar = () => {
+	const [itemsCount, setItemsCount] = useState(0);
 	const [size, setSize] = useState([0, 0]);
 	const [activeBorder, setActiveBorder] = useState<ActiveBorder>({});
 	const [defaultBorder, setDefaultBorder] = useState<ActiveBorder>({});
@@ -40,6 +42,7 @@ export const Sidebar = () => {
 
 	const { toggleShoppingList } = useUIStore();
 	const { user } = useAuthStore();
+	const { shoppingCart } = useProductStore();
 
 	const handleMouseEnter = (e: any) => {
 		const { height, top } = e.target.getBoundingClientRect()!;
@@ -59,6 +62,8 @@ export const Sidebar = () => {
 	};
 
 	const handleSignOut = async () => {
+		localStorage.removeItem('theme');
+		localStorage.removeItem('shoppingCart');
 		await supabase.auth.signOut();
 		router.refresh();
 	};
@@ -73,13 +78,22 @@ export const Sidebar = () => {
 	}, []);
 
 	useEffect(() => {
-		let currentNode = navElement.current?.children[0];
+		let count = 0;
+		shoppingCart.items.forEach(item => {
+			item.products.forEach(product => {
+				count += product.quantity!;
+			});
+		});
+		setItemsCount(count);
+	}, [shoppingCart.items]);
 
+	useEffect(() => {
+		let currentNode = navElement.current?.children[0];
 		if (pathname == '/') {
 			currentNode = navElement.current?.children[0];
-		} else if (pathname == '/history') {
+		} else if (pathname.startsWith('/history')) {
 			currentNode = navElement.current?.children[1];
-		} else if (pathname == '/statistics') {
+		} else if (pathname.startsWith('/statistics')) {
 			currentNode = navElement.current?.children[2];
 		}
 
@@ -168,7 +182,11 @@ export const Sidebar = () => {
 			</nav>
 
 			<footer className='flex flex-col items-center gap-2'>
-				<Badge content='9+' disableOutline color='danger'>
+				<Badge
+					isInvisible={itemsCount === 0}
+					content={itemsCount > 9 ? '+9' : itemsCount}
+					disableOutline
+					color='danger'>
 					<Button
 						onClick={toggleShoppingList}
 						isIconOnly

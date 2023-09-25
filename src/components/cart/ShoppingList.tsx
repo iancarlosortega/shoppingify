@@ -92,7 +92,7 @@ export const ShoppingList = () => {
 						<BottleIcon />
 					</div>
 					<div className='w-[95px]'></div>
-					<div className='flex flex-col justify-between'>
+					<div className='flex flex-col gap-2 justify-between'>
 						<p className='text-white font-bold'>
 							Didn&apos;t find what you need?
 						</p>
@@ -105,8 +105,8 @@ export const ShoppingList = () => {
 				</header>
 
 				<div className='flex items-center justify-between my-6'>
-					<div className='flex justify-start gap-2'>
-						<h3 className='text-2xl font-bold'>{shoppingCart.name}</h3>
+					<div className='flex justify-start gap-2 w-[80%]'>
+						<h3 className='text-2xl font-bold truncate'>{shoppingCart.name}</h3>
 						<Tooltip
 							hidden={shoppingCart.items.length === 0}
 							showArrow
@@ -123,6 +123,7 @@ export const ShoppingList = () => {
 								className={classNames(
 									'bg-transparent',
 									'hover:text-gray-700 transition-colors ease-in',
+									'dark:text-gray-500 dark:hover:text-gray-300',
 									'disabled:text-gray-700 disabled:cursor-not-allowed'
 								)}>
 								{shoppingCart.isEdittingMode ? (
@@ -149,6 +150,7 @@ export const ShoppingList = () => {
 							className={classNames(
 								'bg-transparent mr-2',
 								'hover:text-gray-700 transition-colors ease-in',
+								'dark:text-gray-500 dark:hover:text-gray-300',
 								'disabled:text-gray-700 disabled:cursor-not-allowed'
 							)}>
 							<MdRemoveShoppingCart className='h-6 w-6' />
@@ -187,7 +189,7 @@ export const ShoppingList = () => {
 						isDisabled={shoppingCart.items.length === 0}
 						classNames={{
 							inputWrapper: [
-								'border border-2 border-primary dark:border-none',
+								'border border-2 border-primary',
 								'focus-within:!ring-0 w-[80%] focus-within:!ring-transparent pr-10',
 								'group-data-[disabled=true]:!border-gray-300',
 							],
@@ -197,6 +199,10 @@ export const ShoppingList = () => {
 							minLength: {
 								value: 3,
 								message: 'Minimum length should be 3',
+							},
+							maxLength: {
+								value: 30,
+								message: 'Maximum length should be 30',
 							},
 						})}
 					/>

@@ -3,17 +3,13 @@
 import Image from 'next/image';
 import { Button, useDisclosure } from '@nextui-org/react';
 import { HiArrowLongLeft } from 'react-icons/hi2';
-import { ConfirmDeleteProduct } from '@/components/modals/ConfirmDeleteProduct';
 import useUIStore from '@/store/uiStore';
 import useProductStore from '@/store/productStore';
+import { ConfirmDeleteProduct } from '@/components/modals/ConfirmDeleteProduct';
 import { classNames } from '@/utils';
 
 export const ProductInformation = () => {
-	const {
-		productSelected: product,
-		addProductToCart,
-		updateProductSelected,
-	} = useProductStore();
+	const { productSelected: product, addProductToCart } = useProductStore();
 	const { isProductInformationOpen, toggleProductInformation } = useUIStore();
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 

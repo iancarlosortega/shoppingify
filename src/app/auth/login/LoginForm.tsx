@@ -137,6 +137,7 @@ export const LoginForm = () => {
 					Remember me
 				</Checkbox>
 
+				{/* TODO: Create forgot password page */}
 				<Link
 					href='/auth/forgot-password'
 					className='text-sm underline text-secondary'>

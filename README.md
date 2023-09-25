@@ -25,3 +25,10 @@ This is a simple shopping list app that allows users to record and share things 
 - Install dependencies by running `npm install`
 - Copy `.env.template` and rename to `.env.local` file and add the environment variables
 - Run `npm run dev` to start the development server
+
+## User to test app
+
+- Visit [Shoppingify](https://shoppingify.vercel.app/) to use the app
+- Use the following credentials to login
+  - Email: **test@gmail.com**
+  - Password: **$Asdf123**
