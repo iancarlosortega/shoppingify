@@ -12,11 +12,11 @@ export const HistoryList: React.FC<Props> = ({ shoppingList }) => {
 	return (
 		<ul>
 			{shoppingList.map(item => (
-				<li key={item.id} className='bg-red-500 rounded-lg'>
+				<li key={item.id} className='rounded-lg'>
 					<Link
 						className={classNames(
 							'bg-white mt-6 font-bold flex flex-col md:flex-row md:items-center',
-							'shadow-light px-6 py-4 justify-between gap-2',
+							'shadow-light px-6 py-4 justify-between gap-2 rounded-lg',
 							'dark:bg-neutral-700 dark:text-white'
 						)}
 						href={`/history/${item.id}`}>
@@ -28,8 +28,8 @@ export const HistoryList: React.FC<Props> = ({ shoppingList }) => {
 						</div>
 						<div className='flex flex-col md:flex-row gap-4 md:gap-8 md:items-center'>
 							<div className='flex gap-2 items-center'>
-								<BsCalendarWeek className='text-gray-500' />
-								<p className='text-gray-500 font-medium'>
+								<BsCalendarWeek className='text-gray-500 dark:text-gray-300' />
+								<p className='text-gray-500 dark:text-gray-300 font-medium'>
 									{formatDate(new Date(item.created_at))}
 								</p>
 							</div>
