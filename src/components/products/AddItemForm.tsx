@@ -42,7 +42,7 @@ export const AddItemForm: React.FC<Props> = ({ categories }) => {
 		register,
 		handleSubmit,
 		reset,
-		formState: { errors },
+		formState: { errors, isSubmitting },
 	} = useForm<IFormValues>();
 
 	const onSubmit = async (formValues: IFormValues) => {
@@ -139,6 +139,7 @@ export const AddItemForm: React.FC<Props> = ({ categories }) => {
 					</Button>
 
 					<Button
+						isDisabled={isSubmitting}
 						size='lg'
 						className='bg-primary text-white font-bold'
 						type='submit'>
