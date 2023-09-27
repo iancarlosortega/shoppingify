@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { toast } from 'sonner';
 import {
 	Badge,
 	Button,
@@ -40,9 +41,10 @@ export const Sidebar = () => {
 	const router = useRouter();
 	const supabase = createClientComponentClient();
 
-	const { toggleShoppingList } = useUIStore();
+	const { toggleShoppingList, toggleAddItemForm, toggleProductInformation } =
+		useUIStore();
 	const { user } = useAuthStore();
-	const { shoppingCart } = useProductStore();
+	const { shoppingCart, updateProductSelected } = useProductStore();
 
 	const handleMouseEnter = (e: any) => {
 		const { height, top } = e.target.getBoundingClientRect()!;
@@ -62,9 +64,17 @@ export const Sidebar = () => {
 	};
 
 	const handleSignOut = async () => {
+		const { error } = await supabase.auth.signOut();
+		if (error) {
+			console.error(error);
+			toast.error(error.message);
+			return;
+		}
 		localStorage.removeItem('theme');
 		localStorage.removeItem('shoppingCart');
-		await supabase.auth.signOut();
+		updateProductSelected(null);
+		toggleAddItemForm();
+		toggleProductInformation(false);
 		router.refresh();
 	};
 

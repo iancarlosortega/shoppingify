@@ -1,24 +1,21 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { Button, Input } from '@nextui-org/react';
 import { MdEmail } from 'react-icons/md';
 import { AiFillEye, AiFillEyeInvisible, AiTwotoneLock } from 'react-icons/ai';
-import { BsFillPersonFill } from 'react-icons/bs';
 import { LoadingSpinner } from '@/components/UI/LoadingSpinner';
 
 interface IFormValues {
-	fullName: string;
 	email: string;
 	password: string;
-	confirmPassword: string;
 }
 
-export const RegisterForm = () => {
+export const UpdatePasswordForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const router = useRouter();
 	const supabase = createClientComponentClient();
@@ -26,28 +23,22 @@ export const RegisterForm = () => {
 	const {
 		register,
 		handleSubmit,
-		getValues,
 		formState: { errors, isSubmitting },
 	} = useForm<IFormValues>();
 
-	const onSubmit = async (formValues: IFormValues) => {
-		const { error } = await supabase.auth.signUp({
-			email: formValues.email,
-			password: formValues.password,
-			options: {
-				emailRedirectTo: `${location.origin}/auth/callback`,
-				data: {
-					full_name: formValues.fullName,
-				},
-			},
+	const onSubmit = async ({ email, password }: IFormValues) => {
+		console.log(email, password);
+		const { error } = await supabase.auth.updateUser({
+			email,
+			password,
 		});
-
 		if (error) {
+			console.error(error);
 			toast.error(error.message);
 			return;
 		}
-
-		router.push('/');
+		toast.success('Password updated successfully');
+		router.push('/auth/login');
 	};
 
 	return (
@@ -55,25 +46,6 @@ export const RegisterForm = () => {
 			<Input
 				classNames={{
 					inputWrapper: 'mt-8',
-				}}
-				placeholder='Full name'
-				type='text'
-				label='Name'
-				color={errors.fullName ? 'danger' : undefined}
-				errorMessage={errors.fullName?.message}
-				startContent={<BsFillPersonFill />}
-				{...register('fullName', {
-					required: 'This field is required',
-					minLength: {
-						value: 3,
-						message: 'At least 3 characters are required',
-					},
-				})}
-			/>
-
-			<Input
-				classNames={{
-					inputWrapper: 'mt-4',
 				}}
 				placeholder='example@test.com'
 				type='email'
@@ -94,7 +66,7 @@ export const RegisterForm = () => {
 				classNames={{
 					inputWrapper: 'mt-4',
 				}}
-				label='Password'
+				label='New Password'
 				placeholder='Password'
 				type={showPassword ? 'text' : 'password'}
 				color={errors.password ? 'danger' : undefined}
@@ -120,34 +92,12 @@ export const RegisterForm = () => {
 				})}
 			/>
 
-			<Input
-				classNames={{
-					inputWrapper: 'mt-4',
-				}}
-				label='Confirm Password'
-				placeholder='Confirm Password'
-				type={showPassword ? 'text' : 'password'}
-				color={errors.confirmPassword ? 'danger' : undefined}
-				errorMessage={errors.confirmPassword?.message}
-				startContent={<AiTwotoneLock />}
-				endContent={
-					<button type='button' onClick={() => setShowPassword(!showPassword)}>
-						{showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-					</button>
-				}
-				{...register('confirmPassword', {
-					required: 'This field is required',
-					validate: value =>
-						value === getValues('password') ? true : "Passwords don't match",
-				})}
-			/>
-
 			<Button
 				isDisabled={isSubmitting}
 				type='submit'
 				fullWidth
-				className='bg-secondary text-white font-bold mt-6 mb-4'>
-				{isSubmitting ? <LoadingSpinner /> : 'Register'}
+				className='bg-secondary text-white font-bold my-6'>
+				{isSubmitting ? <LoadingSpinner /> : 'Update'}
 			</Button>
 		</form>
 	);

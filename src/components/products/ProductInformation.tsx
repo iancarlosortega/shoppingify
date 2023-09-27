@@ -31,7 +31,7 @@ export const ProductInformation = () => {
 				<button
 					onClick={() => toggleProductInformation(false)}
 					className='text-primary w-auto bg-transparent flex items-center justify-start gap-2 font-bold'>
-					<HiArrowLongLeft />
+					<HiArrowLongLeft className='stroke-primary stroke-2' />
 					back
 				</button>
 

@@ -53,7 +53,7 @@ export default async function ShoppingListPage({
 			<Link
 				href='/history'
 				className='text-primary w-auto bg-transparent flex items-center justify-start gap-2 font-bold'>
-				<HiArrowLongLeft />
+				<HiArrowLongLeft className='stroke-primary stroke-2' />
 				back
 			</Link>
 			<header className='my-8'>

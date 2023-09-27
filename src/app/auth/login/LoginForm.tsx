@@ -7,12 +7,11 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Provider } from '@supabase/supabase-js';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Button } from '@nextui-org/button';
-import { Checkbox } from '@nextui-org/checkbox';
-import { Input } from '@nextui-org/input';
 import { MdEmail } from 'react-icons/md';
+import { Button, Checkbox, Input } from '@nextui-org/react';
 import { AiFillEye, AiFillEyeInvisible, AiTwotoneLock } from 'react-icons/ai';
 import { FacebookIcon, GithubIcon, GmailIcon } from '@/components/icons';
+import { LoadingSpinner } from '@/components/UI/LoadingSpinner';
 
 interface IFormValues {
 	email: string;
@@ -30,7 +29,7 @@ export const LoginForm = () => {
 		handleSubmit,
 		setValue,
 		setError,
-		formState: { errors },
+		formState: { errors, isSubmitting },
 	} = useForm<IFormValues>({
 		defaultValues: {
 			email:
@@ -137,7 +136,6 @@ export const LoginForm = () => {
 					Remember me
 				</Checkbox>
 
-				{/* TODO: Create forgot password page */}
 				<Link
 					href='/auth/forgot-password'
 					className='text-sm underline text-secondary'>
@@ -146,10 +144,11 @@ export const LoginForm = () => {
 			</div>
 
 			<Button
+				isDisabled={isSubmitting}
 				type='submit'
 				fullWidth
 				className='bg-secondary text-white font-bold'>
-				Login
+				{isSubmitting ? <LoadingSpinner /> : 'Login'}
 			</Button>
 
 			{/* Divider */}
