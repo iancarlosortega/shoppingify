@@ -57,7 +57,7 @@ export default async function ShoppingListPage({
 				back
 			</Link>
 			<header className='my-8'>
-				<h2 className='text-2xl font-bold'>Shoppingify history</h2>
+				<h2 className='text-2xl font-bold'>{shoppingList.name}</h2>
 				<div className='flex gap-4 items-center mt-4'>
 					<BsCalendarWeek className='text-gray-500' />
 					<p className='text-gray-500 font-medium'>

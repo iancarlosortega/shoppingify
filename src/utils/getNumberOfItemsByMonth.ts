@@ -1,6 +1,6 @@
 import { groupDataByDate } from './groupDataByDate';
 
-interface ChartStatistics {
+export interface ChartStatistics {
 	month: string;
 	year: string;
 	numberOfItems: number;

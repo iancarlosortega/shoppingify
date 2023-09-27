@@ -1,6 +1,5 @@
 'use client';
 
-import { getChartData } from '@/utils';
 import {
 	ResponsiveContainer,
 	LineChart,
@@ -11,12 +10,16 @@ import {
 	Legend,
 	Line,
 } from 'recharts';
+import { getChartData } from '@/utils';
+import { ChartStatistics } from '@/utils/getNumberOfItemsByMonth';
+import useUIStore from '@/store/uiStore';
 
 interface Props {
-	data: any;
+	data: ChartStatistics[];
 }
 
 export const Chart: React.FC<Props> = ({ data }) => {
+	const { theme } = useUIStore();
 	const chartData = getChartData(
 		data.filter(
 			(item: any) => item.year === new Date().getFullYear().toString()
@@ -29,7 +32,13 @@ export const Chart: React.FC<Props> = ({ data }) => {
 				<CartesianGrid strokeDasharray='3 3' />
 				<XAxis dataKey='month' />
 				<YAxis />
-				<Tooltip />
+				<Tooltip
+					contentStyle={{
+						backgroundColor: theme === 'light' ? '#FAFAFE' : '#1A1A1A',
+						borderRadius: '10px',
+						color: theme === 'light' ? '#000' : '#fff',
+					}}
+				/>
 				<Legend />
 				<Line
 					type='monotone'

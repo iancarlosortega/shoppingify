@@ -30,7 +30,7 @@ export const ProductListItem: React.FC<Props> = ({ product }) => {
 	}, [shoppingCart.isEdittingMode]);
 
 	return (
-		<li className='flex justify-between items-center my-3 px-1 relative overflow-hidden'>
+		<li className='flex justify-between items-center h-12 my-3 px-1 relative overflow-hidden'>
 			{shoppingCart.isEdittingMode ? (
 				<Checkbox
 					onValueChange={() => toggleProductCheck(product)}
@@ -50,7 +50,7 @@ export const ProductListItem: React.FC<Props> = ({ product }) => {
 					isEditting
 						? 'bg-white dark:bg-neutral-900 opacity-1 translate-x-0 visible'
 						: 'bg-primary-lt opacity-0 translate-x-[80px] invisible'
-				} flex items-center rounded-full h-10 relative transition-all`}>
+				} flex items-center rounded-full h-10 absolute right-0 transition-all`}>
 				<Button
 					radius='lg'
 					isIconOnly

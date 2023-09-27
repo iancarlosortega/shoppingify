@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { TopItems } from '@/components/statistics/TopItems';
 import { Chart } from '@/components/statistics/Chart';
@@ -35,16 +36,17 @@ const getStatistics = async () => {
 export default async function StatisticsPage() {
 	const shoppingLists = await getStatistics();
 
+	if (shoppingLists === null) redirect('/');
+
+	const { topStatistics, chartStatistics } = shoppingLists;
+
 	return (
 		<>
 			<section className='grid md:grid-cols-2 gap-4 md:gap-12'>
-				<TopItems
-					title='Top items'
-					items={shoppingLists?.topStatistics.topProducts ?? {}}
-				/>
+				<TopItems title='Top items' items={topStatistics.topProducts} />
 				<TopItems
 					title='Top Categories'
-					items={shoppingLists?.topStatistics.topCategories ?? {}}
+					items={topStatistics.topCategories}
 					color='secondary'
 				/>
 			</section>
@@ -53,7 +55,7 @@ export default async function StatisticsPage() {
 				<h3 className='text-2xl md:text-3xl font-semibold mb-8'>
 					Monthly Summary
 				</h3>
-				<Chart data={shoppingLists?.chartStatistics} />
+				<Chart data={chartStatistics} />
 			</section>
 		</>
 	);

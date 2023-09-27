@@ -223,10 +223,10 @@ export const ShoppingList = () => {
 						shoppingCart.isEdittingMode
 							? 'opacity-1 translate-x-0 visible'
 							: 'opacity-0 translate-x-[80px] invisible'
-					} absolute top-0 right-0 w-full bg-white z-20 p-8 flex justify-center gap-4 transition-all`}>
+					} absolute top-0 right-0 w-full bg-white dark:bg-neutral-900 z-20 p-8 flex justify-center gap-4 transition-all`}>
 					<Button
 						size='lg'
-						className='bg-transparent dark:text-gray-500 font-bold hover:bg-sky-200'
+						className='bg-transparent dark:text-gray-500 font-bold hover:bg-sky-200 dark:hover:bg-gray-200'
 						onPress={onOpen}>
 						Cancel
 					</Button>
