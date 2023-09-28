@@ -3,16 +3,28 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Input } from '@nextui-org/input';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { CategoriesList } from '@/components/products/CategoriesList';
+import { NoItems } from '@/components/products/NoItems';
 import { Database } from '@/types/database';
 import { Category } from '@/types/categories';
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home() {
+const getCategories = async () => {
 	const supabase = createServerComponentClient<Database>({ cookies });
-	const { data: categories } = await supabase
+	const { error, data: categories } = await supabase
 		.from('categories')
 		.select('*, products(*, category:categories(*))');
+
+	if (error) {
+		console.error(error);
+		return [];
+	}
+
+	return categories;
+};
+
+export default async function Home() {
+	const categories = await getCategories();
 
 	return (
 		<>
@@ -32,9 +44,13 @@ export default async function Home() {
 				/>
 			</header>
 
-			<section>
-				<CategoriesList categories={categories as Category[]} />
-			</section>
+			{categories.length === 0 ? (
+				<NoItems />
+			) : (
+				<section>
+					<CategoriesList categories={categories as Category[]} />
+				</section>
+			)}
 		</>
 	);
 }

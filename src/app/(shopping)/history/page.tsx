@@ -5,6 +5,7 @@ import { HistoryList } from '@/components/history/HistoryList';
 import { groupDataByDate } from '@/utils';
 import { Database } from '@/types/database';
 import { History } from '@/types/history';
+import { NoItems } from '@/components/products/NoItems';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,12 +41,18 @@ export default async function HistoryPage() {
 				<h2 className='text-2xl font-bold'>Shoppingify history</h2>
 			</header>
 			<section className='my-12'>
-				{shoppingLists.map(([key, value]) => (
-					<article key={key} className='mt-6 mb-12'>
-						<h3 className='font-bold'>{key}</h3>
-						<HistoryList shoppingList={value} />
-					</article>
-				))}
+				{shoppingLists.length === 0 ? (
+					<NoItems />
+				) : (
+					<>
+						{shoppingLists.map(([key, value]) => (
+							<article key={key} className='mt-6 mb-12'>
+								<h3 className='font-bold'>{key}</h3>
+								<HistoryList shoppingList={value} />
+							</article>
+						))}
+					</>
+				)}
 			</section>
 		</>
 	);

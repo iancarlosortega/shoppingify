@@ -6,6 +6,7 @@ import { TopItems } from '@/components/statistics/TopItems';
 import { Chart } from '@/components/statistics/Chart';
 import { getNumberOfItemsByMonth, getTopStatistics } from '@/utils';
 import { Database } from '@/types/database';
+import { NoItems } from '@/components/products/NoItems';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,21 +43,27 @@ export default async function StatisticsPage() {
 
 	return (
 		<>
-			<section className='grid md:grid-cols-2 gap-4 md:gap-12'>
-				<TopItems title='Top items' items={topStatistics.topProducts} />
-				<TopItems
-					title='Top Categories'
-					items={topStatistics.topCategories}
-					color='secondary'
-				/>
-			</section>
+			{chartStatistics.length === 0 ? (
+				<NoItems />
+			) : (
+				<>
+					<section className='grid md:grid-cols-2 gap-4 md:gap-12'>
+						<TopItems title='Top items' items={topStatistics.topProducts} />
+						<TopItems
+							title='Top Categories'
+							items={topStatistics.topCategories}
+							color='secondary'
+						/>
+					</section>
 
-			<section className='h-[400px] my-8'>
-				<h3 className='text-2xl md:text-3xl font-semibold mb-8'>
-					Monthly Summary
-				</h3>
-				<Chart data={chartStatistics} />
-			</section>
+					<section className='h-[400px] my-8'>
+						<h3 className='text-2xl md:text-3xl font-semibold mb-8'>
+							Monthly Summary
+						</h3>
+						<Chart data={chartStatistics} />
+					</section>
+				</>
+			)}
 		</>
 	);
 }
