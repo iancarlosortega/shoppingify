@@ -5,7 +5,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { CategoriesList } from '@/components/products/CategoriesList';
 import { NoItems } from '@/components/products/NoItems';
 import { Category } from '@/types/categories';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
 	categories: Category[];
@@ -31,6 +31,10 @@ export const HomeClient: React.FC<Props> = ({ categories }) => {
 				)
 		);
 	};
+
+	useEffect(() => {
+		setFilteredCategories(categories);
+	}, [categories]);
 
 	return (
 		<>
