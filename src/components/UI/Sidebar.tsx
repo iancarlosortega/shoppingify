@@ -20,10 +20,10 @@ import { MdOutlineLogout, MdReplay } from 'react-icons/md';
 import { BiBarChartSquare } from 'react-icons/bi';
 import useAuthStore from '@/store/authStore';
 import useUIStore from '@/store/uiStore';
-import { Logo } from '@/components/icons';
-import { classNames } from '@/utils';
-import { ThemeToggle } from './ThemeToggle';
 import useProductStore from '@/store/productStore';
+import { Logo } from '@/components/icons';
+import { ThemeToggle } from './ThemeToggle';
+import { classNames } from '@/utils';
 
 interface ActiveBorder {
 	height?: number;
@@ -41,8 +41,7 @@ export const Sidebar = () => {
 	const router = useRouter();
 	const supabase = createClientComponentClient();
 
-	const { toggleShoppingList, toggleAddItemForm, toggleProductInformation } =
-		useUIStore();
+	const { toggleShoppingList, toggleProductInformation } = useUIStore();
 	const { user } = useAuthStore();
 	const { shoppingCart, updateProductSelected } = useProductStore();
 
@@ -73,7 +72,6 @@ export const Sidebar = () => {
 		localStorage.removeItem('theme');
 		localStorage.removeItem('shoppingCart');
 		updateProductSelected(null);
-		toggleAddItemForm();
 		toggleProductInformation(false);
 		router.refresh();
 	};

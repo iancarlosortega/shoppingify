@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { HiArrowLongLeft } from 'react-icons/hi2';
@@ -45,8 +45,7 @@ export default async function ShoppingListPage({
 }) {
 	const shoppingList = await getShoppingList(params.id);
 
-	// TODO: redirect to 404 page
-	if (shoppingList === null) redirect('/history');
+	if (shoppingList === null) notFound();
 
 	return (
 		<>

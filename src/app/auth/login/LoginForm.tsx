@@ -165,6 +165,7 @@ export const LoginForm = () => {
 				{/* Facebook */}
 				<button
 					type='button'
+					onClick={() => loginWithOAuth('facebook')}
 					data-te-ripple-init
 					data-te-ripple-color='light'
 					className='bg-[#1877f2] mb-2 inline-block rounded-full p-3 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg'>
@@ -174,6 +175,7 @@ export const LoginForm = () => {
 				{/* Gmail */}
 				<button
 					type='button'
+					onClick={() => loginWithOAuth('google')}
 					data-te-ripple-init
 					data-te-ripple-color='light'
 					className='bg-[#ea4335] mb-2 inline-block rounded-full p-3 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg'>
