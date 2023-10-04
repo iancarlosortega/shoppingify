@@ -45,7 +45,7 @@ This is a simple shopping list app that allows users to record and share things 
 
 ## User to test app
 
-- Visit [Shoppingify](https://shoppingify.vercel.app/) to use the app
+- Visit [Shoppingify](https://shoppingify-blond.vercel.app/) to use the app
 - Use the following credentials to login
   - Email: **test@gmail.com**
   - Password: **$Asdf123**
