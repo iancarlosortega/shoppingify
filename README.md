@@ -53,17 +53,17 @@ This is a simple shopping list app that allows users to record and share things 
 ## Screenshots
 
 <img src="./screenshots/login.png" alt="Login Page">
-<img src="./screenshots/register.png" alt="Login Page">
-<img src="./screenshots/forgot-password.png" alt="Login Page">
-<img src="./screenshots/update-password.png" alt="Login Page">
-<img src="./screenshots/home-desktop.png" alt="Login Page">
-<img src="./screenshots/toggle-theme.png" alt="Login Page">
-<img src="./screenshots/home-dark-desktop.png" alt="Login Page">
-<img src="./screenshots/home-tablet.png" alt="Markdown Editor preview (Tablet)" width="600">
-<img src="./screenshots/home-mobile.png" alt="Markdown Editor preview (Phone)" width="400">
-<img src="./screenshots/add-item.png" alt="Login Page">
-<img src="./screenshots/shopping-list-desktop.png" alt="Login Page">
-<img src="./screenshots/shopping-list-completed.png" alt="Login Page">
-<img src="./screenshots/history.png" alt="Login Page">
-<img src="./screenshots/history-id.png" alt="Login Page">
-<img src="./screenshots/statistics.png" alt="Login Page">
+<img src="./screenshots/register.png" alt="Register Page">
+<img src="./screenshots/forgot-password.png" alt="Forgot password Page">
+<img src="./screenshots/update-password.png" alt="Update password Page">
+<img src="./screenshots/home-desktop.png" alt="Home Page">
+<img src="./screenshots/toggle-theme.png" alt="Toggle theme">
+<img src="./screenshots/home-dark-desktop.png" alt="Home dark theme page">
+<img src="./screenshots/home-tablet.png" alt="Home (Tablet)" width="650">
+<img src="./screenshots/home-mobile.png" alt="Home (Phone)" width="400">
+<img src="./screenshots/add-item.png" alt="Add item to shopping cart">
+<img src="./screenshots/shopping-list-desktop.png" alt="Shopping list">
+<img src="./screenshots/shopping-list-completed.png" alt="Shopping list completed">
+<img src="./screenshots/history.png" alt="History Page">
+<img src="./screenshots/history-id.png" alt="History shopping list page">
+<img src="./screenshots/statistics.png" alt="Statistics Page">
